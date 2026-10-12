@@ -1,0 +1,95 @@
+/* This file is the main entry point for your project's CSS.
+It imports Tailwind's base styles, components, and utilities,
+and defines your project's custom CSS variables and base styles. */
+
+/* Tailwind CSS is a utility-first CSS framework 
+that provides a set of pre-defined classes for styling your HTML elements. 
+It allows you to build custom designs without writing custom CSS, 
+by composing utility classes directly in your HTML. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Neutrals */
+  --color-navy: #0a0a23;
+  --color-slate: #3b3b4f;
+  --color-slate-600: #4d4d60;
+  --color-mist: #d0d0d5;
+  --color-white: #ffffff;
+
+  /* Gold (accent) */
+  --color-gold: #ffc300;
+  --color-gold-ink: #4d3800;
+
+  /* Amber (call-to-action) */
+  --color-amber: #feac32;
+  --color-amber-soft: #fecb4b;
+  --color-amber-deep: #ffac33;
+
+  /* Blue and wine (hero, errors) */
+  --color-blue: #07285e;
+  --color-blue-edge: #0c2d67;
+  --color-wine: #7c2037;
+
+  /* Derived tints (surfaces, alerts, accessible input borders) */
+  --color-mist-soft: #f4f4f6;
+  --color-mist-strong: #8c8c9a;
+  --color-gold-tint: #fff3c4;
+  --color-wine-tint: #f9ebef;
+
+  /* Gradients */
+  --gradient-cta: linear-gradient(var(--color-amber-soft), var(--color-amber-deep));
+  --gradient-hero: linear-gradient(160deg, var(--color-wine), var(--color-blue) 70%);
+}
+
+
+/* The @layer directive is used to define a layer of styles in Tailwind CSS.
+   The base layer is where you can define your project's base styles,
+   such as global styles for HTML elements, typography, and other foundational styles. */
+
+@layer base {
+
+  /* The html element is the root element of the document, 
+  and the -webkit-text-size-adjust property is used to control the text size adjustment behavior in Safari on iOS devices. 
+  Setting it to 100% ensures that the text size remains consistent across different devices and browsers. */
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* The body element is the main container for the content of the document,
+     and the @apply directive is used to apply Tailwind utility classes to the body element. 
+     In this case, the body element is given a white background color,
+     a sans-serif font family, navy text color, and antialiased text rendering for better readability. */
+  body { 
+    @apply font-sans bg-app-bg text-white antialiased;
+  }
+
+/* The h1, h2, and h3 elements are heading elements used to define the structure of the document.
+   The @apply directive is used to apply the font-display utility class to these heading elements,
+   which sets the font family to a display font for better visual hierarchy and emphasis. */
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+  }
+
+  /* The focus-visible pseudo-class is used to style elements that receive focus via keyboard navigation or other non-pointer input methods. */
+  :focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 2px;
+  }
+
+  /* The prefers-reduced-motion media query is used to detect if the user has requested reduced motion in their system preferences.
+     If the user has requested reduced motion, the animation and transition durations are set to a very short duration (0.01ms) to minimize motion effects and improve accessibility for users who may be sensitive to motion.
+     This is important for users with vestibular disorders or other conditions that can be triggered by excessive motion in web content. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
