@@ -1,13 +1,13 @@
 import { endpoints } from '@/config/endpoints';
 import { http, refreshAccessToken } from '@/lib/http';
 import { tokenStore } from '@/lib/tokenStore';
-import type { LoginInput, RegisterInput, ResetPasswordInput, User } from '../types';
+import type { LoginInput, RegisterInput, ResetPasswordInput, User } from '../auth-types';
 
 /**
  * The only place that knows the shape of your backend's responses.
  * If your API differs, adapt it here and the rest of the app stays untouched.
  *
- * Expected contract:
+ * Expected contract/transaction/CRUD operation:
  *   POST login               { email, password }        -> { user, accessToken }  (+ refresh cookie)
  *   POST register            { name, email, password }  -> { user, accessToken } or 2xx without a token
  *   POST refresh             (cookie)                   -> { accessToken }
@@ -23,6 +23,9 @@ interface SessionResponse {
   accessToken: string;
 }
 
+/**
+ * All the API calls are saved in an object, such that you can do `authApi.login()`
+ */
 export const authApi = {
   async login(input: LoginInput): Promise<User> {
     const data = await http.post<SessionResponse>(endpoints.login, input, { auth: false });

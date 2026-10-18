@@ -1,4 +1,9 @@
 
+/** 
+ * An interface is a blueprint for an object, defining what properties and methods it shoul HashChangeEvent,
+ * it enforces type-checking, ensuring that objects adhere to a specific structure. 
+ * An interface can be used to define a custom type for objects, functions, or classes.
+ */
 export interface User {
   id: string;
   name: string;
