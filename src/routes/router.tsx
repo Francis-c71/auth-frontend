@@ -4,12 +4,31 @@ import { GuestRoute, ProtectedRoute } from '@/features/auth/auth-components/Rout
 import { paths } from './paths';
 
 /**
- * Pages are lazy-loaded so the sign-in screen doesn't ship the dashboard
- * (and vice versa).
+ * createBrowerRouter defines all the routes, creates the application routing configuration.
+ * lazy loads the page when it is needed.
+ * createBrowserRouter() receives an array of route objects,
+ * each object describes a route, a layout, a redirect, or a group of child routes,
+ * think of createBrowserRouter() as creating a map, and RouterProvider as using that map to navigate the application.
+ */
+
+/**
+ * path: the URL this route matches,
+ * element: the React component to render,
+ * <Navigate to={paths.dashboard} />: redirects to the dashboard,
+ * replace: replaces the current browser history entry instead of adding another one,
+ * children defines routes nested inside another route.
+ */
+
+/**
+ * Instead of bringing every book into a room before anyone arrives, 
+ * the application fetches the required book when someone asks for it.
+ * This can reduce the JavaScript needed for the initial page load,
+ * the actual benefit depends on your build and how the code is split.
  */
 export const router = createBrowserRouter([
-  { path: paths.home, element: <Navigate to={paths.dashboard} replace /> },
-
+  { path: paths.home, 
+    element: <Navigate to={paths.dashboard} replace /> 
+  },
   {
     // Only for signed-out users
     element: <GuestRoute />,
@@ -27,9 +46,7 @@ export const router = createBrowserRouter([
           },
           {
             path: paths.forgotPassword,
-            lazy: async () => ({
-              Component: (await import('@/features/auth/auth-pages/ForgotPasswordPage')).ForgotPasswordPage,
-            }),
+            lazy: async () => ({ Component: (await import('@/features/auth/auth-pages/ForgotPasswordPage')).ForgotPasswordPage,}),
           },
         ],
       },
@@ -37,20 +54,19 @@ export const router = createBrowserRouter([
   },
 
   {
-    // Reachable from email links, whatever the auth state
+    /**
+     * These routes are outside GuestRoute and ProtectedRoute, making them
+     * reachable from email links, whatever the auth state, both signed-in and signed-out users can reach these pages.
+     */
     element: <AuthLayout />,
     children: [
       {
         path: paths.resetPassword,
-        lazy: async () => ({
-          Component: (await import('@/features/auth/auth-pages/ResetPasswordPage')).ResetPasswordPage,
-        }),
+        lazy: async () => ({ Component: (await import('@/features/auth/auth-pages/ResetPasswordPage')).ResetPasswordPage,}),
       },
       {
         path: paths.verifyEmail,
-        lazy: async () => ({
-          Component: (await import('@/features/auth/auth-pages/VerifyEmailPage')).VerifyEmailPage,
-        }),
+        lazy: async () => ({ Component: (await import('@/features/auth/auth-pages/VerifyEmailPage')).VerifyEmailPage,}),
       },
     ],
   },
@@ -61,15 +77,25 @@ export const router = createBrowserRouter([
     children: [
       {
         path: paths.dashboard,
-        lazy: async () => ({
-          Component: (await import('@/features/dashboard/DashboardPage')).DashboardPage,
-        }),
+        lazy: async () => ({ Component: (await import('@/features/dashboard/DashboardPage')).DashboardPage,}),
       },
     ],
   },
-
+  // The fallback route,
+  // The * is a wildcard. It matches URLs that do not match a more specific route.
   {
     path: '*',
-    lazy: async () => ({ Component: (await import('@/pages/NotFoundPage')).NotFoundPage }),
+    lazy: async () => ({ Component: (await import('@/pages/NotFoundPage')).NotFoundPage,}),
   },
 ]);
+
+
+/**
+ * Why protect the route instead of the dashboard alone?
+ * Because access control becomes reusable:
+ * If you later add /settings, /profile, or 
+ * /reports, you can place those pages inside the same protected parent 
+ * rather than duplicating authentication checks in every page.
+ * Also, client-side route protection is not a replacement for backend authorization, 
+ * the server must still verify permissions for protected API requests.
+ */

@@ -15,9 +15,9 @@ import { cn } from '@/lib/cn';
 type Variant = 'error' | 'success' | 'info';
 
 const styles: Record<Variant, string> = {
-  error: 'border-wine bg-wine-tint text-wine',
-  success: 'border-blue-edge bg-mist-soft text-blue',
-  info: 'border-gold bg-gold-tint text-gold-ink',
+  error: 'border-red-200 bg-red-50 text-red-800',
+  success: 'border-green-200 bg-green-50 text-green-800',
+  info: 'border-blue-200 bg-blue-50 text-blue-700',
 };
 
 interface AlertProps {

@@ -1,3 +1,6 @@
+/**
+ * Where users will be redirected
+ */
 export const paths = {
   home: '/',
   login: '/login',

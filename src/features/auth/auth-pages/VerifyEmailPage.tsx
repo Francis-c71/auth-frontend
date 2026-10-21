@@ -9,6 +9,7 @@ import { paths } from '@/routes/paths';
 import { authApi } from '../auth-api/auth.api';
 import { AuthHeading } from '../auth-components/AuthHeading';
 import { useAuth } from '../auth-context/useAuth';
+import { ErrorToast, SuccessToast } from '@/components/ui/Toast';
 
 const RESEND_COOLDOWN_SECONDS = 30;
 
@@ -23,6 +24,8 @@ function ConfirmToken({ token }: { token: string }) {
   const { status, refreshUser } = useAuth();
   const [state, setState] = useState<'verifying' | 'success' | 'error'>('verifying');
   const [message, setMessage] = useState('');
+  const [emailVerificationSuccessMessage, setEmailVerificationSucessMessage] = useState<string | null>(null);
+  const [emailVerificationErrorMessage, setEmailVerificationErrorMessage] = useState<string | null>(null);
   // Verification tokens are single-use, so guard against React StrictMode's double effect.
   const started = useRef(false);
 
@@ -30,8 +33,7 @@ function ConfirmToken({ token }: { token: string }) {
     if (started.current) return;
     started.current = true;
 
-    authApi
-      .verifyEmail(token)
+    authApi.verifyEmail(token)
       .then(async () => {
         await refreshUser();
         setState('success');
@@ -45,35 +47,37 @@ function ConfirmToken({ token }: { token: string }) {
   if (state === 'verifying') {
     return (
       <div className="flex items-center gap-3 text-slate" role="status">
-        <MiniSpinner className="h-5 w-5 text-blue" />
-        <span>Verifying your email…</span>
+        <MiniSpinner className="h-5 w-5 text-blue" /><span>Verifying your email...</span>
       </div>
     );
   }
 
   if (state === 'success') {
+    setEmailVerificationSucessMessage("Thanks. Your email address is confirmed.");
+
     return (
       <>
+        {emailVerificationSuccessMessage && (<SuccessToast message={emailVerificationSuccessMessage} onDismiss={() => setEmailVerificationSucessMessage(null)} />)}
+        
         <AuthHeading title="Email verified" />
-        <Alert variant="success">Thanks. Your email address is confirmed.</Alert>
-        <p className="mt-8 text-center">
-          <TextLink to={status === 'authenticated' ? paths.dashboard : paths.login} className='text-gradient3 no-underline'>
-            {status === 'authenticated' ? 'Go to your dashboard' : 'Sign in'}
-          </TextLink>
-        </p>
+        
+        <p className="mt-8 text-center"><TextLink to={status === 'authenticated' ? paths.dashboard : paths.login}>{status === 'authenticated' ? 'Go to your dashboard' : 'Sign In'}</TextLink></p>
       </>
     );
   }
 
+  /** We can use message straight away, such that we don't need emailVerificationErrorMessage state */
+  setEmailVerificationErrorMessage(`${message}`);
+
   return (
     <>
+      {emailVerificationErrorMessage && (<ErrorToast message={emailVerificationErrorMessage} onDismiss={() => setEmailVerificationErrorMessage(null)} />)}
+
+      {/* {message && (<ErrorToast message={message} onDismiss={() => setMessage('')} />)}  */}
+
       <AuthHeading title="Couldn’t verify your email" />
-      <Alert variant="error">{message}</Alert>
-      <p className="mt-8 text-center">
-        <TextLink to={paths.login} className='text-gradient3 no-underline'>
-          Sign in to request a new link
-        </TextLink>
-      </p>
+      
+      <p className="mt-8 text-center"><TextLink to={paths.login}>Sign in to request a new link</TextLink></p>
     </>
   );
 }
@@ -96,48 +100,39 @@ function CheckInbox() {
     if (!email) return;
     setSending(true);
     setResult(null);
+
     try {
       await authApi.resendVerification(email);
       setResult({ kind: 'success', text: 'We sent you a new link.' });
       setCooldown(RESEND_COOLDOWN_SECONDS);
+
     } catch (err) {
       setResult({ kind: 'error', text: getErrorMessage(err, 'Couldn’t send the email. Try again.') });
+
     } finally {
       setSending(false);
     }
   }
 
+  function sentMessageInformation() {
+    return email ? (
+      <>
+        We sent a verification link to <strong className="font-semibold text-white">{email}</strong>. Open it to finish setting up your account.
+      </>
+    ) : (
+      'We sent you a verification link. Open it to finish setting up your account.'
+    )
+  }
+
   return (
     <>
-      <AuthHeading
-        title="Check your inbox"
-        description={
-          email ? (
-            <>
-              We sent a verification link to <strong className="font-semibold text-white">{email}</strong>. Open it to
-              finish setting up your account.
-            </>
-          ) : (
-            'We sent you a verification link. Open it to finish setting up your account.'
-          )
-        }
-      />
+      <AuthHeading title="Check your inbox" description={sentMessageInformation()}/>
 
-      {result && (
-        <Alert variant={result.kind} className="mb-5">
-          {result.text}
-        </Alert>
-      )}
+      {result && (<Alert variant={result.kind} className="mb-5">{result.text} </Alert>)}
 
-      {email && (
-        <Button fullWidth loading={sending} disabled={cooldown > 0} onClick={resend} className='text-white'>
-          {cooldown > 0 ? `Resend email in ${cooldown}s` : 'Resend email'}
-        </Button>
-      )}
+      {email && (<Button fullWidth loading={sending} disabled={cooldown > 0} onClick={resend} className='text-white'>{cooldown > 0 ? `Resend email in ${cooldown}s` : 'Resend email'}</Button>)}
 
-      <p className="mt-8 text-center text-slate">
-        <TextLink to={paths.login} className='text-gradient3 no-underline'>Back to sign in</TextLink>
-      </p>
+      <p className="mt-8 text-center text-slate"><TextLink to={paths.login}>Back to sign in</TextLink></p>
     </>
   );
 }

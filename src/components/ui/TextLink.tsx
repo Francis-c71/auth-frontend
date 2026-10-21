@@ -3,9 +3,6 @@ import { cn } from '@/lib/cn';
 
 export function TextLink({ className, ...props }: LinkProps) {
   return (
-    <Link
-      className={cn('font-semibold text-blue underline underline-offset-4 hover:text-wine', className)}
-      {...props}
-    />
+    <Link className={cn('font-semibold underline-offset-4 text-gradient3 no-underline hover:text-gradient2', className)}{...props}/>
   );
 }

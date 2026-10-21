@@ -1,4 +1,7 @@
+
 import { useContext } from 'react';
+
+// The AuthContext gives the contract of the shape of an abject that can be in it. 
 import { AuthContext } from './auth-context';
 
 export function useAuth() {
