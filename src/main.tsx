@@ -11,11 +11,11 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 
 // Check who can access the app and what they can do with it, based on their authentication status and roles
-import { AuthProvider } from '@/features/auth/auth-context/AuthProvider';
+import { AuthProvider } from '@/5_features/auth/context/AuthProvider';
 
 // The router object defines the routes and their corresponding components for the application
-import { router } from '@/routes/router';
-import '@/styles/index.css';
+import { router } from '@/6_routes/router';
+import '@/4_styles/index.css';
 
 
 // Finds an empty HTML div element with the id of 'root',
