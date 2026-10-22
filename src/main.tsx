@@ -22,6 +22,7 @@ import '@/4_styles/index.css';
 // TypeScript's non-null assertion operator (!) is used to tell the compiler that the value will not be null or undefined,
 // convert it to a react root, 
 // and render put a react component tree inside it.
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
@@ -29,6 +30,45 @@ createRoot(document.getElementById('root')!).render(
     </AuthProvider>
   </StrictMode>,
 );
+
+// Helper to read css var
+const getCssVar = (name: string): string => {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+};
+
+const syncBrowswerThemeColor = (): void => {
+  const root = document.documentElement;
+  const isDark = root.classList.contains('dark') || window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  // DARK = navy, LIGHT = white -change to mist if you want.
+  const cssVarName = isDark ? '--color-navy' : '--color-white';
+  const fallback = isDark ? '#0a0a23' : '#ffffff';
+
+  const color = getCssVar(cssVarName) || fallback;
+
+  let meta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
+  if (!meta) {
+    meta = document.createElement('meta');
+    meta.name = 'theme-color';
+    document.head.appendChild(meta);
+  }
+  meta.content = color;
+
+};
+
+//---------Render here when it fails--------------
+
+// Sync after render
+syncBrowswerThemeColor();
+
+// Auto-sync when system theme changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncBrowswerThemeColor);
+
+// Auto-sync when you toggle `class="dark"` with tailwind
+new MutationObserver(syncBrowswerThemeColor).observe(document.documentElement, {
+  attributes: true,
+  attributeFilter: ['class'],
+});
 
 
 // import { createRoot } from 'react-dom/client';

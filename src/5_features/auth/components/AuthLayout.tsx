@@ -27,19 +27,20 @@ export function AuthLayout() {
       </aside>
 
       {/* Right section: sign-in page */}
-      <main className="flex min-h-dvh flex-col">
+      <main className="flex flex-col min-h-dvh">
 
         {/* Mobile header and science text */}
-        <header className="flex flex-col items-center p-6 text-white lg:hidden">
+        <header className="flex justify-center items-center flex-col p-6 text-white lg:hidden">
 
-          <div className="mt-4 mb-8">
-            <div className='pl-9 '>
+          <div className="flex justify-center items-center flex-col mt-4 mb-8">
+            
               <Logo tone='light' />
-            </div>
-            <p className="mt-3 text-sm leading-relaxed font-semibold text-mist">
+            
+            <p className="text-center mt-3 text-sm leading-relaxed font-semibold text-mist">
               Practical Biology to Lower Secondary Curriculum.
             </p>
           </div>
+          
         </header>
 
 
