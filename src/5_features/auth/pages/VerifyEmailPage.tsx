@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { Alert } from '@/3_components/ui/Alert';
 import { Button } from '@/3_components/ui/Button';
 import { MiniSpinner } from '@/3_components/ui/Spinner';
 import { TextLink } from '@/3_components/ui/TextLink';
@@ -13,7 +12,7 @@ import { ErrorToast, SuccessToast } from '@/3_components/ui/Toast';
 
 const RESEND_COOLDOWN_SECONDS = 30;
 
-/** With ?token=… it confirms the address. Without one it tells the user to check their inbox. */
+/** With ?token=... it confirms the address. Without one it tells the user to check their inbox. */
 export function VerifyEmailPage() {
   const [params] = useSearchParams();
   const token = params.get('token');
@@ -115,20 +114,17 @@ function CheckInbox() {
   }
 
   function sentMessageInformation() {
-    return email ? (
-      <>
-        We sent a verification link to <strong className="font-semibold text-white">{email}</strong>. Open it to finish setting up your account.
-      </>
-    ) : (
-      'We sent you a verification link. Open it to finish setting up your account.'
-    )
+    return email ? (<>We sent a verification link to <strong className="font-semibold text-white">{email}</strong>. Open it to finish setting up your account.</>) 
+                 : ('We sent you a verification link. Open it to finish setting up your account.')
   }
 
   return (
     <>
       <AuthHeading title="Check your inbox" description={sentMessageInformation()}/>
 
-      {result && (<Alert variant={result.kind} className="mb-5">{result.text} </Alert>)}
+      {result?.kind === 'success' && (<SuccessToast message={result.text} onDismiss={() => setResult(null)} />)}
+
+      {result?.kind === 'error' && (<ErrorToast message={result.text} onDismiss={() => setResult(null)} />)}
 
       {email && (<Button fullWidth loading={sending} disabled={cooldown > 0} onClick={resend} className='text-white'>{cooldown > 0 ? `Resend email in ${cooldown}s` : 'Resend email'}</Button>)}
 
