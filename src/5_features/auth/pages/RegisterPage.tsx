@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { ErrorToast, SuccessToast, } from '@/3_components/ui/Toast';
+import { ErrorToast } from '@/3_components/ui/Toast';
 import { Button } from '@/3_components/ui/Button';
 import { PasswordField } from '@/3_components/ui/PasswordField';
 import { PasswordStrength } from '@/3_components/ui/PasswordStrength';
@@ -19,7 +19,6 @@ export function RegisterPage() {
   const { register: signUp } = useAuth();
   const navigate = useNavigate();
   const [formError, setFormError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const { register, handleSubmit, setError, watch, formState: { errors, isSubmitting }, } = useForm<RegisterValues>({ resolver: zodResolver(registerSchema), defaultValues: {name: '', email: '', password: '', confirmPassword: '',}, });
 
@@ -32,13 +31,14 @@ export function RegisterPage() {
     try {
 
       const { verificationRequired } = await signUp({name, email, password, });
-      
-      setSuccessMessage('Your account was created successfully.');
-
-      /** If the backend signed the user in, <GuestRoute> takes over from here.*/
       if (verificationRequired) {
-        navigate(paths.verifyEmail, { state: { email } });
-      }
+        navigate(paths.verifyEmail, {
+         state: {
+          email,
+          notice: 'Account created successfully, please verify your email.',
+    },
+  });
+}
 
     } catch (err) {
       setFormError(applyApiError(err, setError, ['name', 'email', 'password'], 'Couldn’t create your account. Try again.',), );
@@ -50,8 +50,6 @@ export function RegisterPage() {
   return (
     <>
       {formError && (<ErrorToast message={formError} onDismiss={() => setFormError(null)} />)}
-
-      {successMessage && (<SuccessToast message={successMessage} onDismiss={() => setSuccessMessage(null)} />)}
 
       <AuthHeading title="Sign Up." />
 
@@ -74,7 +72,7 @@ export function RegisterPage() {
 
       </form>
 
-      <p className="mt-2 text-center text-white">Already have an account?{' '}<TextLink to={paths.login}>Sign In</TextLink></p>
+      <p className="mt-2 text-center">Already have an account?{' '}<TextLink to={paths.login}>Sign In</TextLink></p>
 
     </>
   );

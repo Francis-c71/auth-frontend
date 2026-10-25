@@ -59,7 +59,7 @@ export function ForgotPasswordPage() {
 
       <form onSubmit={onSubmit} noValidate className="space-y-5">
 
-        <TextField placeholder='Email' type="email" autoComplete="email" inputMode="email" autoFocus error={errors.email?.message}{...register('email')}/>
+        <TextField placeholder='Email' type="email" autoComplete="email" inputMode="email" autoFocus error={errors.email?.message}{...register('email')} className="bg-gray-800 text-white autofill:[-webkit-text-fill-color:white] autofill:shadow-[inset_0_0_0_1000px_#181820]" />
 
         <div></div> 
 
@@ -67,7 +67,7 @@ export function ForgotPasswordPage() {
 
       </form>
 
-      <p className="mt-2 text-center text-white">Remembered it? <TextLink to={paths.login} className='text-gradient3 no-underline hover:text-gradient2 hover:text-gradient2'>Sign In</TextLink></p>
+      <p className="mt-2 text-center">Remembered it? <TextLink to={paths.login} >Sign In</TextLink></p>
 
     </>
   );

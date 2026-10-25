@@ -20,8 +20,11 @@ export function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [formError, setFormError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  
+
   const notice = (location.state as { notice?: string } | null)?.notice;
+  const [successMessage, setSuccessMessage] = useState<string | null>(notice ?? null);
+  
 
   const { register, handleSubmit, setError, formState: { errors, isSubmitting }, } = useForm<LoginValues>({resolver: zodResolver(loginSchema), defaultValues: { email: '', password: '' },});
 
@@ -30,20 +33,23 @@ export function LoginPage() {
     try {
       /**  On success AuthProvider updates, and <GuestRoute> redirects to the page the user wanted.*/
       await login(values);
-      setSuccessMessage("You did not login successfully")
+  
     } catch (err) {
-
       if (err instanceof ApiError && err.code === EMAIL_NOT_VERIFIED_CODE) {
-        navigate(paths.verifyEmail, { state: { email: values.email } });
+        navigate(paths.verifyEmail, { 
+          state: { 
+            email: values.email,
+            notice: "Please verify your email before logging in.",
+            },
+          }
+        );
         return;
       }
 
       if (err instanceof ApiError && err.status === 401) {
-        /**  Deliberately vague: never reveal whether the email exists.*/
         setFormError('Email or password is incorrect.');
         return;
       }
-
       setFormError(applyApiError(err, setError, ['email', 'password'], 'Couldn’t sign you in. Try again.'));
     }
   });
@@ -51,9 +57,8 @@ export function LoginPage() {
   return (
     <>
 
-    {formError && ( <ErrorToast message={formError} onDismiss={() => setFormError(null)}/> )}
-
-    {successMessage && ( <SuccessToast message={successMessage} onDismiss={() => setSuccessMessage(null)}/> )}
+    {formError && (<ErrorToast message={formError} onDismiss={() => setFormError(null)} />)}
+    {successMessage && (<SuccessToast message={successMessage} onDismiss={() => setSuccessMessage(null)} />)}
 
       <AuthHeading title="Sign In" />
 
@@ -68,9 +73,10 @@ export function LoginPage() {
 
         <Button type="submit" fullWidth loading={isSubmitting}>Sign In</Button>
 
+
       </form>
 
-      <p className="mt-2 text-center text-white">Don't have an account? <TextLink to={paths.register}>Sign Up</TextLink></p>
+      <p className="mt-2 text-center">Don't have an account? <TextLink to={paths.register}>Sign Up</TextLink></p>
     </>
   );
 }

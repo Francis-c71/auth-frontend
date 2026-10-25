@@ -84,8 +84,9 @@ function ConfirmToken({ token }: { token: string }) {
 function CheckInbox() {
   const location = useLocation();
   const email = (location.state as { email?: string } | null)?.email;
-
-  const [cooldown, setCooldown] = useState(0);
+  const notice = (location.state as { notice?:string } | null)?.notice;
+  const [successMessage, setSuccessMessage] = useState<string | null>( notice ?? null );
+  const [cooldown, setCooldown] = useState(0); 
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<{ kind: 'success' | 'error'; text: string } | null>(null);
 
@@ -122,13 +123,15 @@ function CheckInbox() {
     <>
       <AuthHeading title="Check your inbox" description={sentMessageInformation()}/>
 
+      {successMessage && (<SuccessToast message={successMessage} onDismiss={() => setSuccessMessage(null)} />)}
+
       {result?.kind === 'success' && (<SuccessToast message={result.text} onDismiss={() => setResult(null)} />)}
 
       {result?.kind === 'error' && (<ErrorToast message={result.text} onDismiss={() => setResult(null)} />)}
 
-      {email && (<Button fullWidth loading={sending} disabled={cooldown > 0} onClick={resend} className='text-white'>{cooldown > 0 ? `Resend email in ${cooldown}s` : 'Resend email'}</Button>)}
+      {email && (<Button fullWidth loading={sending} disabled={cooldown > 0} onClick={resend} >{cooldown > 0 ? `Resend email in ${cooldown}s` : 'Resend email'}</Button>)}
 
-      <p className="mt-8 text-center text-slate"><TextLink to={paths.login}>Back to sign in</TextLink></p>
+      <p className="mt-8 text-center"><TextLink to={paths.login}>Back to sign in</TextLink></p>
     </>
   );
 }

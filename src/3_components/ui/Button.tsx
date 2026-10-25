@@ -12,14 +12,14 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  'relative inline-flex items-center justify-center rounded-lg px-4 py-2 text-base font-medium text-center transition ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gradient3 focus-visible:ring-offset-2 focus-visible:ring-offset-app-bg ' +
-  'disabled:cursor-not-allowed disabled:opacity-60';
+  'relative inline-flex items-center justify-center rounded-lg px-4 py-2 text-center' +
+  ' focus-visible:ring-2' +
+  'disabled:opacity-60';
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-gradient-to-r  from-gradient2 to-gradient3 text-white hover:brightness-110 active:brightness-95',
+  primary: 'bg-gradient-to-t from-amber to-soft text-xl font-bold text-navyBrand border border-amber border-4 hover:brightness-110 active:brightness-95',
   secondary: 'border border-border-app bg-transparent text-white hover:bg-white/10',
-  ghost: 'border border-transparent text-grey hover:bg-white/10',
+  ghost: 'border border-transparent hover:bg-white/10',
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
@@ -38,7 +38,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       {/* Spinner is overlaid so the button never changes size or shifts the label */}
       {loading && (
         <span className="absolute inset-0 flex items-center justify-center">
-          <MiniSpinner className="size-4" />
+          <MiniSpinner className="size-8" />
         </span>
       )}
       <span className={cn('inline-flex font-bold items-center justify-center gap-2', loading && 'invisible')}>

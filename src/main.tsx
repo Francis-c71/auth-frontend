@@ -1,8 +1,8 @@
-
+// Detects unexpected side effects by intentionally double-invoking certain functions
 // A development-only tool for finding bugs
 // Double render components to find side effects in render phase 
 // Finds deprecated lifecycles, legacy API usage, and other potential problems
-// Detects unexpected side effects by intentionally double-invoking certain functions
+
 import { StrictMode } from 'react';
 
 import { createRoot } from 'react-dom/client';
@@ -16,6 +16,8 @@ import { AuthProvider } from '@/5_features/auth/context/AuthProvider';
 // The router object defines the routes and their corresponding components for the application
 import { router } from '@/6_routes/router';
 import '@/4_styles/index.css';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { ThemeColor } from './3_components/ui/MobileBrowserTheme';
 
 
 // Finds an empty HTML div element with the id of 'root',
@@ -25,50 +27,17 @@ import '@/4_styles/index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <ThemeProvider>
+    {/* <ThemeColor theme="dark" /> */}
+    <ThemeColor />
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
+    </ThemeProvider>
   </StrictMode>,
 );
 
-// Helper to read css var
-const getCssVar = (name: string): string => {
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-};
 
-const syncBrowswerThemeColor = (): void => {
-  const root = document.documentElement;
-  const isDark = root.classList.contains('dark') || window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  // DARK = navy, LIGHT = white -change to mist if you want.
-  const cssVarName = isDark ? '--color-navy' : '--color-white';
-  const fallback = isDark ? '#0a0a23' : '#ffffff';
-
-  const color = getCssVar(cssVarName) || fallback;
-
-  let meta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
-  if (!meta) {
-    meta = document.createElement('meta');
-    meta.name = 'theme-color';
-    document.head.appendChild(meta);
-  }
-  meta.content = color;
-
-};
-
-//---------Render here when it fails--------------
-
-// Sync after render
-syncBrowswerThemeColor();
-
-// Auto-sync when system theme changes
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncBrowswerThemeColor);
-
-// Auto-sync when you toggle `class="dark"` with tailwind
-new MutationObserver(syncBrowswerThemeColor).observe(document.documentElement, {
-  attributes: true,
-  attributeFilter: ['class'],
-});
 
 
 // import { createRoot } from 'react-dom/client';
@@ -97,4 +66,5 @@ new MutationObserver(syncBrowswerThemeColor).observe(document.documentElement, {
 // }
 
 // export default App;
+
 

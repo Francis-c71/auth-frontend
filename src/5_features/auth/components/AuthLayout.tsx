@@ -2,24 +2,29 @@
 import { Outlet } from 'react-router-dom';
 import { Logo } from '@/3_components/ui/Logo';
 import { env } from '@/1_config/env';
+import { ThemeToggle } from '@/3_components/ui/ThemeToggle';
 
 export function AuthLayout() {
   return (
-    <div className="grid min-h-dvh bg-navy lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+    <div className="min-h-dvh bg-white text-navyBrand dark:bg-background dark:text-white grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
 
       {/* Left section: visible on large screens */}
-      <aside className="relative hidden overflow-hidden p-12 text-white lg:flex lg:flex-col lg:justify-between">
+      <aside className="relative hidden overflow-hidden p-12 lg:flex lg:flex-col lg:justify-between">
         <Logo tone="light" />
 
         <div className="relative z-10 max-w-md">
           <h2 className="text-5xl font-bold leading-[1.05] tracking-tight">
             The Living Science.
           </h2>
-
-          <p className="mt-5 text-lg leading-relaxed text-mist">
+          <p className="mt-5 text-lg leading-relaxed">
             Practical Biology to Lower Secondary Curriculum.
           </p>
         </div>
+
+        <ThemeToggle />
+          <div className="bg-white text-navyBrand dark:bg-background dark:text-white">
+                  Theme test
+          </div>
 
         <p className="relative z-10 text-sm text-mist">
           © {new Date().getFullYear()} {env.appName}
