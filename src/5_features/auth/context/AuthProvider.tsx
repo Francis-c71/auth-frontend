@@ -172,11 +172,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshUser = useCallback<AuthContextValue['refreshUser']>(async () => {
     if (!tokenStore.get()) return;
+
+    
     try {
       dispatch({ type: 'USER_UPDATED', user: await authApi.me() });
     } catch {
       // A failed refresh of the profile shouldn't sign anyone out.
     }
+
   }, []);
 
   /**

@@ -1,84 +1,169 @@
-import { useState } from 'react';
+
+import { useCallback, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+
 import { Button } from '@/3_components/ui/Button';
 import { PasswordField } from '@/3_components/ui/PasswordField';
 import { PasswordStrength } from '@/3_components/ui/PasswordStrength';
 import { TextLink } from '@/3_components/ui/TextLink';
+import { ErrorToast, SuccessToast } from '@/3_components/ui/Toast';
 import { applyApiError } from '@/2_lib/forms';
 import { paths } from '@/6_routes/paths';
+
 import { authApi } from '../api/auth.api';
 import { AuthHeading } from '../components/AuthHeading';
-import { resetPasswordSchema, type ResetPasswordValues } from '../schemas';
-import { ErrorToast } from '@/3_components/ui/Toast';
+import {
+  resetPasswordSchema,
+  type ResetPasswordValues,
+} from '../schemas';
 
 export function ResetPasswordPage() {
   const [params] = useSearchParams();
   const token = params.get('token');
-  const [invalidLink, setInvalidLink] = useState<string | null>(null);
-  
-  if (!token){
-    setInvalidLink("This reset link is incomplete. Request a new one to continue.");
 
+  const [showInvalidLink, setShowInvalidLink] = useState(true);
+
+  if (!token) {
     return (
       <>
-        {invalidLink && (<ErrorToast message={invalidLink} onDismiss={() => setInvalidLink(null)} />)}
+        {showInvalidLink && (
+          <ErrorToast
+            message="This reset link is incomplete. Request a new one to continue."
+            onDismiss={() => setShowInvalidLink(false)}
+          />
+        )}
 
         <AuthHeading title="Invalid link" />
-        
-        <p className="mt-8 text-center"><TextLink to={paths.forgotPassword}>Request a new link</TextLink></p>
+
+        <p className="mt-8 text-center">
+          <TextLink to={paths.forgotPassword}>
+            Request a new link
+          </TextLink>
+        </p>
       </>
     );
-
   }
 
   return <ResetPasswordForm token={token} />;
 }
 
 function ResetPasswordForm({ token }: { token: string }) {
-
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const notice = (
+    location.state as { notice?: string } | null
+  )?.notice;
+
+  const [successMessage, setSuccessMessage] = useState<string | null>(
+    notice ?? 'Enter your new password below.',
+  );
 
   const [formError, setFormError] = useState<string | null>(null);
 
-  const { register, handleSubmit, setError, watch, formState: { errors, isSubmitting }, } = useForm<ResetPasswordValues>({resolver: zodResolver(resetPasswordSchema), defaultValues: { password: '', confirmPassword: '' },});
+  const dismissSuccess = useCallback(() => {
+    setSuccessMessage(null);
+  }, []);
+
+  const dismissError = useCallback(() => {
+    setFormError(null);
+  }, []);
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<ResetPasswordValues>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
   const passwordValue = watch('password');
 
   const onSubmit = handleSubmit(async ({ password }) => {
-
     setFormError(null);
 
     try {
       await authApi.resetPassword({ token, password });
-      navigate(paths.login, {replace: true, state: { notice: 'Password updated. Sign in with your new password.' },});
 
+      navigate(paths.login, {
+        replace: true,
+        state: {
+          notice: 'Password updated successfully. Please sign in.',
+        },
+      });
     } catch (err) {
-      setFormError(applyApiError(err, setError, ['password'], 'Couldn’t reset your password. Request a new link and try again.'));
+      setFormError(
+        applyApiError(
+          err,
+          setError,
+          ['password'],
+          'Couldn’t reset your password. Request a new link and try again.',
+        ),
+      );
     }
-
   });
 
   return (
     <>
-      {formError && (<ErrorToast message={formError} onDismiss={() => setFormError(null)} />)}
+      {formError && (
+        <ErrorToast
+          message={formError}
+          onDismiss={dismissError}
+        />
+      )}
 
-      <AuthHeading title="Choose a new password" description="Use something you don’t use anywhere else." />
+      {successMessage && (
+        <SuccessToast
+          message={successMessage}
+          onDismiss={dismissSuccess}
+        />
+      )}
+
+      <AuthHeading
+        title="Choose a new password"
+        description="Use something you don’t use anywhere else."
+      />
 
       <form onSubmit={onSubmit} noValidate className="space-y-5">
-
-        {formError && (<TextLink to={paths.forgotPassword}>Request a new link</TextLink>)}
-          
         <div>
-          <PasswordField placeholder='New password' autoComplete="new-password" autoFocus hint="At least 8 characters, with a letter and a number." error={errors.password?.message}{...register('password')} />
+          <PasswordField
+            placeholder="New password"
+            autoComplete="new-password"
+            autoFocus
+            hint="At least 8 characters, with a letter and a number."
+            error={errors.password?.message}
+            {...register('password')}
+          />
+
           <PasswordStrength password={passwordValue} />
         </div>
 
-        <PasswordField placeholder='Confirm new password' autoComplete="new-password" error={errors.confirmPassword?.message}{...register('confirmPassword')} />
+        <PasswordField
+          placeholder="Confirm new password"
+          autoComplete="new-password"
+          error={errors.confirmPassword?.message}
+          {...register('confirmPassword')}
+        />
 
-        <Button type="submit" fullWidth loading={isSubmitting}> Update password</Button>
+        {formError && (
+          <p className="text-center">
+            <TextLink to={paths.forgotPassword}>
+              Request a new link
+            </TextLink>
+          </p>
+        )}
 
+        <Button type="submit" fullWidth loading={isSubmitting}>
+          Update password
+        </Button>
       </form>
     </>
   );

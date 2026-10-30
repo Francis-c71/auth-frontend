@@ -14,6 +14,7 @@ import { AuthHeading } from '../components/AuthHeading';
 import { useAuth } from '../context/useAuth';
 import { loginSchema, type LoginValues } from '../schemas';
 import { ErrorToast, SuccessToast } from '@/3_components/ui/Toast';
+import { ThemeToggle } from '@/3_components/ui/ThemeToggle';
 
 export function LoginPage() {
   const { login } = useAuth();
@@ -77,6 +78,11 @@ export function LoginPage() {
       </form>
 
       <p className="mt-2 text-center">Don't have an account? <TextLink to={paths.register}>Sign Up</TextLink></p>
+
+      <ThemeToggle />
+                <div className="bg-white text-navyBrand dark:bg-background dark:text-white">
+                        Theme test
+                </div>
     </>
   );
 }

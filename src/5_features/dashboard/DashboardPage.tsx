@@ -23,7 +23,7 @@ export function DashboardPage() {
   return (
     <div className="min-h-dvh bg-background">
 
-      <header className="border border-border">
+      <header className="border border-border bg-navyBrand">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <Logo />
           <div className="flex items-center gap-4">
@@ -37,10 +37,10 @@ export function DashboardPage() {
 
       <main className="mx-auto max-w-5xl px-6 py-12">
         <h1 className="text-4xl font-bold tracking-tight">Hi, {firstName}</h1>
-        <p className="mt-2 text-lg text-slate">You’re signed in. This is where your app begins.</p>
-        <section aria-labelledby="account-heading" className="mt-10 rounded-xl border p-6 sm:p-8">
+        <p className="mt-2 text-lg">You’re signed in. This is where your app begins.</p>
+        <section aria-labelledby="account-heading" className="mt-10 rounded-xl border border-border p-6 sm:p-8">
           <h2 id="account-heading" className="text-xl font-bold">Your account</h2>
-          <dl className="mt-6 grid gap-6 sm:grid-cols-2">
+          <dl className="mt-6 grid gap-6 sm:grid-cols-2" w-full overflow-hidden>
             <Detail label="Name" value={user.name} />
             <Detail label="Email" value={user.email} />
             <Detail label="Email status" value={user.emailVerified ? 'Verified' : 'Not verified'} />
@@ -56,8 +56,8 @@ export function DashboardPage() {
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-sm text-navyBrand">{label}</dt>
-      <dd className="mt-1 break-words text-base font-semibold text-navy">{value}</dd>
+      <dt className="text-sm breaak-all">{label}</dt>
+      <dd className="mt-1 text-base font-semibold break-all">{value}</dd>
     </div>
   );
 }
