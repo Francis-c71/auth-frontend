@@ -26,14 +26,14 @@ npm run build            # type-checks, then builds to dist/
 | Login | `POST /auth/login` `{ email, password }` | `{ user, accessToken }` + refresh cookie |
 | Register | `POST /auth/register` `{ name, email, password }` | `{ user, accessToken }`, or any 2xx without a token if the email must be verified first |
 | Refresh | `POST /auth/refresh` (cookie) | `{ accessToken }` |
-| Current user | `GET /auth/me` | `User` or `{ user }` |
+| Current user | `GET /users/me` | `User` or `{ user }` |
 | Logout | `POST /auth/logout` | 204, clears the refresh cookie |
 | Forgot password | `POST /auth/forgot-password` `{ email }` | 2xx |
 | Reset password | `POST /auth/reset-password` `{ token, password }` | 2xx |
 | Verify email | `POST /auth/verify-email` `{ token }` | 2xx |
 | Resend verification | `POST /auth/resend-verification` `{ email }` | 2xx |
 
-`User` = `{ id, name, email, emailVerified, createdAt? }`.
+`User` = `{ id, name, email, isEmailVerified, createdAt? }`.
 
 Errors: any JSON body with `message` (or `error`), optional `code`, and optional `errors` as `{ field: "msg" }`, `{ field: ["msg"] }` or `[{ field, message }]`. Field errors are shown under the matching input. Return `code: "EMAIL_NOT_VERIFIED"` on login to send the user to the verify screen.
 
@@ -42,7 +42,7 @@ Email links should point to `/reset-password?token=…` and `/verify-email?token
 ## How it works
 
 - **Tokens**: the access token lives in memory only (`lib/tokenStore.ts`). The refresh token is an httpOnly cookie your backend sets. Nothing sensitive goes in localStorage.
-- **Session restore**: on load, `AuthProvider` calls refresh, then `/auth/me`.
+- **Session restore**: on load, `AuthProvider` calls refresh, then `/users/me`.
 - **Automatic refresh**: `lib/http.ts` retries a 401 once after refreshing. Concurrent refreshes share one request (needed for rotating refresh tokens). If refresh fails, the user is signed out.
 - **Route guards**: `ProtectedRoute` and `GuestRoute`. After sign-in the user returns to the page they wanted; the redirect target is validated as same-origin.
 - **Cross-tab sync**: signing out in one tab signs out the others (`BroadcastChannel`).

@@ -43,7 +43,7 @@ export function DashboardPage() {
           <dl className="mt-6 grid gap-6 sm:grid-cols-2" w-full overflow-hidden>
             <Detail label="Name" value={user.name} />
             <Detail label="Email" value={user.email} />
-            <Detail label="Email status" value={user.emailVerified ? 'Verified' : 'Not verified'} />
+            <Detail label="Email status" value={user.isEmailVerified ? 'Verified' : 'Not verified'} />
             {memberSince && <Detail label="Member since" value={memberSince} />}
           </dl>
         </section>
