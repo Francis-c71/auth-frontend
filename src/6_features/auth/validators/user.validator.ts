@@ -1,0 +1,1 @@
+// There is no need to validate users since the auth validator has done so.

@@ -8,10 +8,10 @@
  * useAuth reads the authentication state from your auth context.
  */
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { FullPageSpinner } from '@/3_components/ui/Spinner';
+import { FullPageSpinner } from '@/4_components/ui/Spinner';
 import { resolveRedirect } from '@/2_lib/redirect';
-import { paths } from '@/6_routes/paths';
-import { useAuth } from '../context/useAuth';
+import { paths } from '@/7_routes/paths';
+import { useAuth } from '../contexts/AuthContext';
 
 /** 
  * Allows signed-in user into a protected routes, 

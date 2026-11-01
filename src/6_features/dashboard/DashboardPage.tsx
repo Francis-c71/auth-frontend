@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Button } from '@/3_components/ui/Button';
-import { Logo } from '@/3_components/ui/Logo';
-import { useAuth } from '@/5_features/auth/context/useAuth';
+import { Button } from '@/4_components/ui/Button';
+import { Logo } from '@/4_components/ui/Logo';
+import { useAuth } from '@/6_features/auth/contexts/AuthContext';
 
 /** Placeholder for the signed-in area. Replace the content, keep the shell. */
 export function DashboardPage() {
@@ -37,7 +37,7 @@ export function DashboardPage() {
 
       <main className="mx-auto max-w-5xl px-6 py-12">
         <h1 className="text-4xl font-bold tracking-tight">Hi, {firstName}</h1>
-        <p className="mt-2 text-lg">You’re signed in. This is where your app begins.</p>
+        <p className="mt-2 text-lg">Welcome back. Happy reading!</p>
         <section aria-labelledby="account-heading" className="mt-10 rounded-xl border border-border p-6 sm:p-8">
           <h2 id="account-heading" className="text-xl font-bold">Your account</h2>
           <dl className="mt-6 grid gap-6 sm:grid-cols-2" w-full overflow-hidden>

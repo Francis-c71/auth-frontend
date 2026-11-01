@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { Button } from '@/3_components/ui/Button';
-import { TextField } from '@/3_components/ui/TextField';
-import { TextLink } from '@/3_components/ui/TextLink';
+import { Button } from '@/4_components/ui/Button';
+import { TextField } from '@/4_components/ui/TextField';
+import { TextLink } from '@/4_components/ui/TextLink';
 import { ApiError } from '@/2_lib/errors';
-import { paths } from '@/6_routes/paths';
-import { authApi } from '../api/auth.api';
+import { paths } from '@/7_routes/paths';
+import { authApi } from '../services/auth.service';
 import { AuthHeading } from '../components/AuthHeading';
-import { forgotPasswordSchema, type ForgotPasswordValues } from '../schemas';
-import { ErrorToast, SuccessToast, } from '@/3_components/ui/Toast';
+import { forgotPasswordSchema, type ForgotPasswordValues } from '../models/Auth';
+import { ErrorToast, SuccessToast, } from '@/4_components/ui/Toast';
 
 export function ForgotPasswordPage() {
   const [sentTo, setSentTo] = useState<string | null>(null);

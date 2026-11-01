@@ -4,20 +4,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
-import { Button } from '@/3_components/ui/Button';
-import { PasswordField } from '@/3_components/ui/PasswordField';
-import { PasswordStrength } from '@/3_components/ui/PasswordStrength';
-import { TextLink } from '@/3_components/ui/TextLink';
-import { ErrorToast, SuccessToast } from '@/3_components/ui/Toast';
+import { Button } from '@/4_components/ui/Button';
+import { PasswordField } from '@/4_components/ui/PasswordField';
+import { PasswordStrength } from '@/4_components/ui/PasswordStrength';
+import { TextLink } from '@/4_components/ui/TextLink';
+import { ErrorToast, SuccessToast } from '@/4_components/ui/Toast';
 import { applyApiError } from '@/2_lib/forms';
-import { paths } from '@/6_routes/paths';
+import { paths } from '@/7_routes/paths';
 
-import { authApi } from '../api/auth.api';
+import { authApi } from '../services/auth.service';
 import { AuthHeading } from '../components/AuthHeading';
-import {
-  resetPasswordSchema,
-  type ResetPasswordValues,
-} from '../schemas';
+import { resetPasswordSchema, type ResetPasswordValues, } from '../models/Auth';
 
 export function ResetPasswordPage() {
   const [params] = useSearchParams();

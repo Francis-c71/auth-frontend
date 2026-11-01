@@ -1,8 +1,8 @@
 
 import { Outlet } from 'react-router-dom';
-import { Logo } from '@/3_components/ui/Logo';
+import { Logo } from '@/4_components/ui/Logo';
 import { env } from '@/1_config/env';
-import { ThemeToggle } from '@/3_components/ui/ThemeToggle';
+import { ThemeToggle } from '@/4_components/ui/ThemeToggle';
 
 export function AuthLayout() {
   return (

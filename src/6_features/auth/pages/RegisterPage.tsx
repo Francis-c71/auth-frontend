@@ -3,17 +3,17 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { ErrorToast } from '@/3_components/ui/Toast';
-import { Button } from '@/3_components/ui/Button';
-import { PasswordField } from '@/3_components/ui/PasswordField';
-import { PasswordStrength } from '@/3_components/ui/PasswordStrength';
-import { TextField } from '@/3_components/ui/TextField';
-import { TextLink } from '@/3_components/ui/TextLink';
+import { ErrorToast } from '@/4_components/ui/Toast';
+import { Button } from '@/4_components/ui/Button';
+import { PasswordField } from '@/4_components/ui/PasswordField';
+import { PasswordStrength } from '@/4_components/ui/PasswordStrength';
+import { TextField } from '@/4_components/ui/TextField';
+import { TextLink } from '@/4_components/ui/TextLink';
 import { applyApiError } from '@/2_lib/forms';
-import { paths } from '@/6_routes/paths';
+import { paths } from '@/7_routes/paths';
 import { AuthHeading } from '../components/AuthHeading';
-import { useAuth } from '../context/useAuth';
-import { registerSchema, type RegisterValues } from '../schemas';
+import { useAuth } from '../contexts/AuthContext';
+import { registerSchema, type RegisterValues } from '../models/Auth';
 
 export function RegisterPage() {
   const { register: signUp } = useAuth();

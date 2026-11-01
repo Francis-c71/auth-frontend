@@ -11,13 +11,13 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 
 // Check who can access the app and what they can do with it, based on their authentication status and roles
-import { AuthProvider } from '@/5_features/auth/context/AuthProvider';
+import { AuthProvider } from '@/6_features/auth/providers/AuthProvider';
 
 // The router object defines the routes and their corresponding components for the application
-import { router } from '@/6_routes/router';
-import '@/4_styles/index.css';
-import { ThemeProvider } from './contexts/ThemeContext';
-import { ThemeColor } from './3_components/ui/MobileBrowserTheme';
+import { router } from '@/7_routes/router';
+import '@/5_styles/index.css';
+import { ThemeProvider } from '@/3_utils/ThemeContext';
+import { ThemeColor } from './4_components/ui/MobileBrowserTheme';
 
 
 // Finds an empty HTML div element with the id of 'root',
@@ -28,7 +28,6 @@ import { ThemeColor } from './3_components/ui/MobileBrowserTheme';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-    {/* <ThemeColor theme="dark" /> */}
     <ThemeColor />
     <AuthProvider>
       <RouterProvider router={router} />

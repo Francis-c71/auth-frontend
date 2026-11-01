@@ -1,6 +1,6 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
-import { AuthLayout } from '@/5_features/auth/components/AuthLayout';
-import { GuestRoute, ProtectedRoute } from '@/5_features/auth/components/RouteGuards';
+import { AuthLayout } from '@/6_features/auth/components/AuthLayout';
+import { GuestRoute, ProtectedRoute } from '@/6_features/auth/components/RouteGuards';
 import { paths } from './paths';
 
 /**
@@ -38,15 +38,15 @@ export const router = createBrowserRouter([
         children: [
           {
             path: paths.login,
-            lazy: async () => ({ Component: (await import('@/5_features/auth/pages/LoginPage')).LoginPage }),
+            lazy: async () => ({ Component: (await import('@/6_features/auth/pages/LoginPage')).LoginPage }),
           },
           {
             path: paths.register,
-            lazy: async () => ({ Component: (await import('@/5_features/auth/pages/RegisterPage')).RegisterPage }),
+            lazy: async () => ({ Component: (await import('@/6_features/auth/pages/RegisterPage')).RegisterPage }),
           },
           {
             path: paths.forgotPassword,
-            lazy: async () => ({ Component: (await import('@/5_features/auth/pages/ForgotPasswordPage')).ForgotPasswordPage,}),
+            lazy: async () => ({ Component: (await import('@/6_features/auth/pages/ForgotPasswordPage')).ForgotPasswordPage,}),
           },
         ],
       },
@@ -62,11 +62,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: paths.resetPassword,
-        lazy: async () => ({ Component: (await import('@/5_features/auth/pages/ResetPasswordPage')).ResetPasswordPage,}),
+        lazy: async () => ({ Component: (await import('@/6_features/auth/pages/ResetPasswordPage')).ResetPasswordPage,}),
       },
       {
         path: paths.verifyEmail,
-        lazy: async () => ({ Component: (await import('@/5_features/auth/pages/VerifyEmailPage')).VerifyEmailPage,}),
+        lazy: async () => ({ Component: (await import('@/6_features/auth/pages/VerifyEmailPage')).VerifyEmailPage,}),
       },
     ],
   },
@@ -77,7 +77,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: paths.dashboard,
-        lazy: async () => ({ Component: (await import('@/5_features/dashboard/DashboardPage')).DashboardPage,}),
+        lazy: async () => ({ Component: (await import('@/6_features/dashboard/DashboardPage')).DashboardPage,}),
       },
     ],
   },
@@ -85,7 +85,7 @@ export const router = createBrowserRouter([
   // The * is a wildcard. It matches URLs that do not match a more specific route.
   {
     path: '*',
-    lazy: async () => ({ Component: (await import('@/3_components/ui/NotFoundPage')).NotFoundPage,}),
+    lazy: async () => ({ Component: (await import('@/4_components/ui/NotFoundPage')).NotFoundPage,}),
   },
 ]);
 

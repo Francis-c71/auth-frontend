@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Logo } from './Logo';
-import { paths } from '@/6_routes/paths';
+import { paths } from '@/7_routes/paths';
 
 export function NotFoundPage() {
   return (

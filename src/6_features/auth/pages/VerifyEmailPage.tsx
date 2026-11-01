@@ -2,16 +2,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
-import { Button } from '@/3_components/ui/Button';
-import { MiniSpinner } from '@/3_components/ui/Spinner';
-import { TextLink } from '@/3_components/ui/TextLink';
+import { Button } from '@/4_components/ui/Button';
+import { MiniSpinner } from '@/4_components/ui/Spinner';
+import { TextLink } from '@/4_components/ui/TextLink';
 import { getErrorMessage } from '@/2_lib/errors';
-import { paths } from '@/6_routes/paths';
+import { paths } from '@/7_routes/paths';
 
-import { authApi } from '../api/auth.api';
+import { authApi } from '../services/auth.service';
 import { AuthHeading } from '../components/AuthHeading';
-import { useAuth } from '../context/useAuth';
-import { ErrorToast, SuccessToast } from '@/3_components/ui/Toast';
+import { useAuth } from '../contexts/AuthContext';
+import { ErrorToast, SuccessToast } from '@/4_components/ui/Toast';
 
 const RESEND_COOLDOWN_SECONDS = 30;
 

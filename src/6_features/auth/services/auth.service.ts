@@ -1,7 +1,8 @@
 import { endpoints } from '@/1_config/endpoints';
 import { http, refreshAccessToken } from '@/2_lib/http';
 import { tokenStore } from '@/2_lib/tokenStore';
-import type { LoginInput, RegisterInput, ResetPasswordInput, User } from '../types';
+import type { User } from '@/6_features/auth/models/User';
+import type { LoginInput, RegisterInput, ResetPasswordInput } from '../models/Auth';
 
 /**
  * The only place that knows the shape of your backend's responses.

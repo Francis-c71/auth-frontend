@@ -1,33 +1,3 @@
-// import { useEffect } from 'react';
-
-// interface ThemeColorProps {
-//   theme: 'dark' | 'light';
-// }
-
-// export function ThemeColor({ theme }: ThemeColorProps) {
-//   useEffect(() => {
-//     const color = theme === 'dark' ? '#0a0a23' : '#ffffff';
-
-//     let meta = document.querySelector<HTMLMetaElement>(
-//       'meta[name="theme-color"]',
-//     );
-
-//     if (!meta) {
-//       meta = document.createElement('meta');
-//       meta.name = 'theme-color';
-//       document.head.appendChild(meta);
-//     }
-
-//     meta.content = color;
-//   }, [theme]);
-
-//   return null;
-// }
-
-
-// If your theme is controlled by a dark class on the <html> element, 
-// you can simplify the component so that you don't need to pass theme at all
-
 
 import { useEffect } from 'react';
 
