@@ -43,7 +43,8 @@ export function GuestRoute() {
 
   if (status === 'loading') return <FullPageSpinner label="Checking your session" />;
   if (status === 'authenticated') {
-    return <Navigate to={resolveRedirect(location.state, paths.dashboard)} replace />;
+    //return <Navigate to={resolveRedirect(location.state, paths.dashboard)} replace />;
+    return <Navigate to={resolveRedirect(location.state, paths.foodtest)} replace />;
   }
   return <Outlet />;
 }

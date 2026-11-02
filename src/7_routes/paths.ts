@@ -9,4 +9,5 @@ export const paths = {
   resetPassword: '/reset-password',
   verifyEmail: '/verify-email',
   dashboard: '/dashboard',
+  foodtest: '/food-test',
 } as const;
