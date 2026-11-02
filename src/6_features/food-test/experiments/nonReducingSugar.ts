@@ -4,10 +4,9 @@ import type { Experiment } from '../types';
 export const nonReducingSugar: Experiment = {
   id: 'non-reducing-sugar',
   title: 'Test for non-reducing sugars',
-  aim: 'To find out whether a food sample contains a non-reducing sugar, such as sucrose.',
   outcomeLabels: {
-    present: 'Sample contains a non-reducing sugar',
-    absent: 'Sample has no non-reducing sugar',
+    present: 'Positive test',
+    absent: 'Negative test',
   },
 
   steps: [
@@ -77,8 +76,8 @@ export const nonReducingSugar: Experiment = {
       procedure: "2 ml of Benedict's solution was added.",
       run: (lab) => lab.addReagent('benedict', 2),
       observation: {
-        present: 'The solution turned blue.',
-        absent: 'The solution turned blue.',
+        present: 'The colourless solution turned blue solution,',
+        absent: 'The colourless solution turned blue solution;',
       },
     },
     {
@@ -108,7 +107,7 @@ export const nonReducingSugar: Experiment = {
         await lab.releaseTube();
       },
       observation: {
-        present: 'The blue colour changed to green, then orange, and a brick-red precipitate formed.',
+        present: 'to green solution, to orange precipitate, to brown precipitate.',
         absent: 'The solution stayed blue. No precipitate formed.',
       },
     },
@@ -116,14 +115,10 @@ export const nonReducingSugar: Experiment = {
 
   deduction: {
     present: {
-      result: 'Non-reducing sugar present.',
-      explanation:
-        'A brick-red precipitate formed only after the sample was heated with acid. The acid broke the non-reducing sugar into reducing sugars, which then reduced Benedict’s solution.',
+      result: 'Non-reducing sugars present.',
     },
     absent: {
-      result: 'Non-reducing sugar absent.',
-      explanation:
-        'The solution stayed blue even after heating with acid. No reducing sugars were released, so the sample has no non-reducing sugar.',
+      result: 'Non-reducing sugars absent.',
     },
   },
 };

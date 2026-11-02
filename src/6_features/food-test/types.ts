@@ -15,13 +15,11 @@ export interface ExperimentStep {
 
 export interface Deduction {
   result: string;
-  explanation: string;
 }
 
 export interface Experiment {
   id: string;
   title: string;
-  aim: string;
   outcomeLabels: Record<Outcome, string>;
   steps: ExperimentStep[];
   deduction: Record<Outcome, Deduction>;
