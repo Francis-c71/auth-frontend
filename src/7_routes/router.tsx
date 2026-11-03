@@ -75,10 +75,10 @@ export const router = createBrowserRouter([
     // Only for signed-in users
     element: <ProtectedRoute />,
     children: [
-      // {
-      //   path: paths.dashboard,
-      //   lazy: async () => ({ Component: (await import('@/6_features/dashboard/DashboardPage')).DashboardPage,}),
-      // },
+      {
+        path: paths.dashboard,
+        lazy: async () => ({ Component: (await import('@/6_features/dashboard/DashboardPage')).DashboardPage,}),
+      },
       {
         path: paths.foodtest,
         lazy: async () => ({ Component: (await import('@/6_features/food-test/pages/FoodTestPage')).FoodTestPage,}),
