@@ -36,7 +36,7 @@ export function LearnCard({ user, onLocked }: LearnCardProps) {
           if (!canAccess(test, user)) {
             return (
               <li key={test.id}>
-                <button type="button" onClick={onLocked} className={`${row} hover:bg-[#1c1c1c] ${focusRing}`}>
+                <button type="button" onClick={onLocked} className={`${row} hover:bg-panel ${focusRing}`}>
                   {body}
                   <Tag>Pay to access</Tag>
                 </button>
@@ -45,7 +45,7 @@ export function LearnCard({ user, onLocked }: LearnCardProps) {
           }
           return (
             <li key={test.id}>
-              <a href={test.href} className={`${row} hover:bg-[#1c1c1c] ${focusRing}`}>
+              <a href={test.href} className={`${row} hover:bg-panel ${focusRing}`}>
                 {body}
                 <Tag>Open</Tag>
               </a>

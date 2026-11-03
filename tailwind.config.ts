@@ -21,18 +21,29 @@ export default {
 
   theme: {
     colors: {
+      background: '#1b222c', // page, cells, cards
+      panel: '#2f3a4c',      // raised areas, hover fill
+      border: '#2f3a4c',     // quiet structural lines
+      outline: '#d0d5dd',    // controls only
+      foreground: '#f4f5f6', // main text
+      soft: '#e7e9ee',       // secondary text
+      muted: '#8d96a5',      // placeholders (use on `background`, not on `panel`)
+      accent: '#195936',     // selected and active
+      onAccent: '#eaf6ef',   // text on accent
+      brand: '#13c965',      // logo only
+
       transparent: 'transparent',
       white: '#ffffff',
-      border: "#343343",
+      borderAuth: "#343343",
       error: "#FF5252",
       navyBrand: '#0a0a23',
-      background: '#181832', 
+      backgroundAuth: '#181832', 
       cards: '#252540',  
       hover: '#66667D',
        gold: '#ffc300',
        coffee: '#4d3800',
        amber: '#feac32',
-       soft: '#fecb4b',
+       softAuth: '#fecb4b',
        amberdeep: '#ffac33',
 
       slate: {

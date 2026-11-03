@@ -1,41 +1,59 @@
+// When the videos arrive
+// Set src, poster, duration and cues for 
+// each outcome in nonReducingSugar.ts, 
+// with one cue per step, in seconds. 
+// The preview box is replaced by a normal video with native controls, 
+// and nothing else changes.
+
 import { useState } from 'react';
 import { Logo } from '@/4_components/ui/Logo';
-import { ExperimentTable } from '../components/ExperimentTable';
+import { ExperimentBoard } from '../components/ExperimentBoard';
 import { OutcomeSelector } from '../components/OutcomeSelector';
 import { nonReducingSugar } from '../experiments/nonReducingSugar';
-import { useExperimentRunner } from '../hooks/useExperimentRunner';
+import { usePlayback } from '../hooks/usePlayback';
+import { progressAt } from '../lib/progress';
 import type { Experiment, Outcome } from '../types';
+
+/** One playthrough. The page gives it a new `key` per outcome, so a new sample starts clean. */
+function Session({ experiment, outcome }: { experiment: Experiment; outcome: Outcome }) {
+  const recording = experiment.recordings[outcome];
+  const playback = usePlayback({ duration: recording.duration, hasVideo: Boolean(recording.src) });
+  const progress = progressAt(recording.cues, playback.time, playback.length);
+
+  return (
+    <ExperimentBoard experiment={experiment} outcome={outcome} recording={recording} playback={playback} progress={progress} />
+  );
+}
 
 /** Plays one food test. Pass another `experiment` to reuse the page for a different test. */
 export function FoodTestPage({ experiment = nonReducingSugar }: { experiment?: Experiment }) {
   const [outcome, setOutcome] = useState<Outcome>('present');
-  const { scene, currentIndex, completed, status } = useExperimentRunner(experiment, outcome);
 
   return (
-    <div className="min-h-dvh bg-[#0a0a0a] text-white">
-      <header className="border border-border bg-[#111111]">
+    <div className="flex min-h-dvh flex-col bg-background text-foreground">
+      <header className="border-b border-border bg-background">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4">
           <Logo />
-          <span className="text-sm text-white/70">Food tests</span>
+          <span className="text-sm text-soft">Food tests</span>
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1400px] px-6 py-10">
-        <h1 className="text-2xl font-bold tracking-tight sm:text-4xl">{experiment.title}</h1>
+      <main className="flex-1 bg-panel">
+        <div className="mx-auto max-w-[1400px] px-6 py-10">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{experiment.title}</h1>
+          <p className="mt-3 max-w-3xl text-base leading-relaxed text-soft">
+            <span className="font-semibold text-foreground">Aim: </span>
+            {experiment.aim}
+          </p>
 
-        <div className="mt-8 flex flex-wrap items-center gap-4">
-          <OutcomeSelector value={outcome} labels={experiment.outcomeLabels} onChange={setOutcome} />
-        </div>
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <span className="text-sm font-semibold">Sample to test</span>
+            <OutcomeSelector value={outcome} labels={experiment.outcomeLabels} onChange={setOutcome} />
+          </div>
 
-        <div className="mt-6">
-          <ExperimentTable
-            experiment={experiment}
-            outcome={outcome}
-            scene={scene}
-            currentIndex={currentIndex}
-            completed={completed}
-            status={status}
-          />
+          <div className="mt-6">
+            <Session key={outcome} experiment={experiment} outcome={outcome} />
+          </div>
         </div>
       </main>
     </div>

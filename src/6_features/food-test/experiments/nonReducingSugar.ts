@@ -1,25 +1,34 @@
-import { LIQUID } from '@/4_components/lab';
-import type { Experiment } from '../types';
+import type { Experiment, Recording } from '../types';
+
+/**
+ * Placeholder timings for the preview. After filming, give each outcome its own recording:
+ *   { src: '/videos/non-reducing-present.mp4', poster: '...', duration: 61.4, cues: [0, 7.2, ...] }
+ * Put the files in /public/videos.
+ */
+const preview: Recording = {
+  duration: 58,
+  cues: [0, 6, 12, 22, 30, 36, 42],
+};
 
 export const nonReducingSugar: Experiment = {
   id: 'non-reducing-sugar',
   title: 'Test for non-reducing sugars',
+  aim: 'To find out whether a food sample contains a non-reducing sugar, such as sucrose.',
   outcomeLabels: {
-    present: 'Positive test',
-    absent: 'Negative test',
+    present: 'Sample contains a non-reducing sugar',
+    absent: 'Sample has no non-reducing sugar',
   },
+  recordings: { present: preview, absent: preview },
 
   steps: [
     {
       id: 'sample',
       procedure: '2 ml of the sample solution was measured into a clean test tube.',
-      run: (lab) => lab.addReagent('sample', 2),
       observation: { present: 'A colourless solution.', absent: 'A colourless solution.' },
     },
     {
       id: 'acid',
       procedure: '2 ml of dilute hydrochloric acid was added.',
-      run: (lab) => lab.addReagent('hcl', 2),
       observation: {
         present: 'No visible change. The solution stayed colourless.',
         absent: 'No visible change. The solution stayed colourless.',
@@ -28,16 +37,6 @@ export const nonReducingSugar: Experiment = {
     {
       id: 'heat',
       procedure: 'The mixture was heated in a Bunsen flame, held with a test tube holder.',
-      run: async (lab) => {
-        await lab.setFlame(true);
-        await lab.pickUpTube();
-        await lab.moveTube('flame');
-        lab.say('Heating the mixture');
-        lab.patchTube({ temp: 'hot', bubbling: true });
-        await lab.wait(3200);
-        lab.patchTube({ bubbling: false });
-        await lab.setFlame(false);
-      },
       observation: {
         present: 'The solution stayed colourless and began to boil gently.',
         absent: 'The solution stayed colourless and began to boil gently.',
@@ -46,17 +45,6 @@ export const nonReducingSugar: Experiment = {
     {
       id: 'cool',
       procedure: 'The tube was cooled under running tap water.',
-      run: async (lab) => {
-        await lab.moveTube('tap');
-        await lab.setTap(true);
-        lab.say('Cooling the tube under running water');
-        lab.patchTube({ temp: 'cold' });
-        await lab.wait(2600);
-        lab.patchTube({ temp: 'normal' });
-        await lab.setTap(false);
-        await lab.moveTube('rack');
-        await lab.releaseTube();
-      },
       observation: {
         present: 'The tube cooled to room temperature. The solution was still colourless.',
         absent: 'The tube cooled to room temperature. The solution was still colourless.',
@@ -65,7 +53,6 @@ export const nonReducingSugar: Experiment = {
     {
       id: 'base',
       procedure: '2 ml of sodium hydroxide solution was added to neutralise the acid.',
-      run: (lab) => lab.addReagent('naoh', 2),
       observation: {
         present: 'No visible change. The solution stayed colourless.',
         absent: 'No visible change. The solution stayed colourless.',
@@ -74,40 +61,13 @@ export const nonReducingSugar: Experiment = {
     {
       id: 'benedict',
       procedure: "2 ml of Benedict's solution was added.",
-      run: (lab) => lab.addReagent('benedict', 2),
-      observation: {
-        present: 'The colourless solution turned blue solution,',
-        absent: 'The colourless solution turned blue solution;',
-      },
+      observation: { present: 'The solution turned blue.', absent: 'The solution turned blue.' },
     },
     {
       id: 'boil',
       procedure: 'The mixture was boiled.',
-      run: async (lab, outcome) => {
-        await lab.setFlame(true);
-        await lab.pickUpTube();
-        await lab.moveTube('flame');
-        lab.say('Boiling the mixture');
-        lab.patchTube({ temp: 'hot', bubbling: true });
-        if (outcome === 'present') {
-          await lab.wait(1200);
-          lab.patchTube({ color: LIQUID.green });
-          await lab.wait(1300);
-          lab.patchTube({ color: LIQUID.orange });
-          await lab.wait(1300);
-          lab.patchTube({ color: LIQUID.brick, precipitate: 1 });
-          await lab.wait(1500);
-        } else {
-          await lab.wait(5200);
-        }
-        lab.patchTube({ bubbling: false });
-        await lab.setFlame(false);
-        await lab.moveTube('rack');
-        lab.patchTube({ temp: 'normal' });
-        await lab.releaseTube();
-      },
       observation: {
-        present: 'to green solution, to orange precipitate, to brown precipitate.',
+        present: 'The blue colour changed to green, then orange, and a brick-red precipitate formed.',
         absent: 'The solution stayed blue. No precipitate formed.',
       },
     },
@@ -115,10 +75,14 @@ export const nonReducingSugar: Experiment = {
 
   deduction: {
     present: {
-      result: 'Non-reducing sugars present.',
+      result: 'Non-reducing sugar present.',
+      explanation:
+        'A brick-red precipitate formed only after the sample was heated with acid. The acid broke the non-reducing sugar into reducing sugars, which then reduced Benedict’s solution.',
     },
     absent: {
-      result: 'Non-reducing sugars absent.',
+      result: 'Non-reducing sugar absent.',
+      explanation:
+        'The solution stayed blue even after heating with acid. No reducing sugars were released, so the sample has no non-reducing sugar.',
     },
   },
 };
