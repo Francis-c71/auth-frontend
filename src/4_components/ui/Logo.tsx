@@ -1,5 +1,4 @@
 
-import { env } from '@/1_config/env';
 import { cn } from '@/2_lib/cn';
 
 export function LogoMark({ className }: { className?: string }) {
@@ -12,7 +11,7 @@ export function Logo({ tone = 'dark' }: { tone?: 'dark' | 'light' }) {
 
       <LogoMark className="h-10 w-10" />
 
-      <span className={cn('font-display text-xl font-bold tracking-tight', tone === 'light' ? 'text-white' : 'text-navy')} >{env.appName}</span>
+      <span className={cn('font-display text-xl font-bold tracking-tight', tone === 'light' ? 'text-white' : 'text-navy')} ></span>
       
     </span>
   );

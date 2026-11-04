@@ -5,7 +5,6 @@ export type Access = 'free' | 'paid';
 export interface FoodTest {
   id: string;
   name: string;
-  description: string;
   access: Access;
   /** Route of the test page. Leave it out while the test is not built yet. */
   href?: string;
@@ -13,16 +12,41 @@ export interface FoodTest {
 
 export const FOOD_TESTS: FoodTest[] = [
   {
+    id: 'reducing-sugar-test',
+    name: 'Reducing sugars test',
+    access: 'paid'
+  },
+  {
     id: 'non-reducing-sugar',
-    name: 'Non-reducing sugars',
-    description: 'Hydrolyse with acid, then test with Benedict’s solution.',
+    name: 'Non-reducing sugars test',
     access: 'free',
     href: '/food-test',
   },
-  { id: 'reducing-sugar', name: 'Reducing sugars', description: 'Benedict’s test.', access: 'free' },
-  { id: 'starch', name: 'Starch', description: 'Iodine test.', access: 'free' },
-  { id: 'protein', name: 'Proteins', description: 'Biuret test.', access: 'free' },
-  { id: 'fats', name: 'Fats and oils', description: 'Emulsion test.', access: 'free' },
+  { 
+    id: 'reducing-sugar', 
+    name: 'Benedict\'s test', 
+    access: 'paid' 
+  },
+  { 
+    id: 'starch', 
+    name: 'Iodine test', 
+    access: 'paid' 
+  },
+  { 
+    id: 'protein', 
+    name: 'Buiret test', 
+    access: 'paid' 
+  },
+  { 
+    id: 'fats', 
+    name: 'Emulsion test',  
+    access: 'paid' 
+  },
+  {
+    id: 'vitamin-c',
+    name: 'DCPIP test',
+    access: 'paid'
+  },
 ];
 
 /** Flip this to true when payments go live. */

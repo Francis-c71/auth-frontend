@@ -8,7 +8,7 @@ interface LearnCardProps {
   onLocked: () => void;
 }
 
-const row = '-mt-px flex w-full items-center justify-between gap-4 border border-border px-4 py-3 text-left first:mt-0';
+const row = '-mt-px flex w-full items-center bg-background text-backgroundtext justify-between gap-4 border border-border px-4 py-3 text-left first:mt-0';
 
 export function LearnCard({ user, onLocked }: LearnCardProps) {
   return (
@@ -19,14 +19,13 @@ export function LearnCard({ user, onLocked }: LearnCardProps) {
           const body = (
             <span className="min-w-0">
               <span className="block text-sm font-semibold">{test.name}</span>
-              <span className="mt-0.5 block text-sm text-white/65">{test.description}</span>
             </span>
           );
 
           if (!test.href) {
             return (
               <li key={test.id}>
-                <div className={`${row} text-white/55`}>
+                <div className={`${row}`}>
                   {body}
                   <Tag>Coming soon</Tag>
                 </div>
@@ -45,9 +44,9 @@ export function LearnCard({ user, onLocked }: LearnCardProps) {
           }
           return (
             <li key={test.id}>
-              <a href={test.href} className={`${row} hover:bg-panel ${focusRing}`}>
+              <a href={test.href} className={`${row} ${focusRing}`}>
                 {body}
-                <Tag>Open</Tag>
+                <Tag>Present open</Tag>
               </a>
             </li>
           );

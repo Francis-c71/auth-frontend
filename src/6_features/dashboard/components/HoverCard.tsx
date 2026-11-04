@@ -42,7 +42,7 @@ export function HoverCard({ id, label, open, onOpen, onClose, children }: HoverC
           if (open) onClose();
           else onOpen();
         }}
-        className={`border px-4 py-2 text-sm font-medium ${focusRing} ${
+        className={`border border-border px-2 py-2 text-lg font-medium ${focusRing} ${
           open ? 'border-border bg-[#1c1c1c] text-white' : 'border-transparent text-white/80 hover:bg-[#1c1c1c] hover:text-white'
         }`}
       >

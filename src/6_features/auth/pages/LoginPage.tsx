@@ -79,10 +79,7 @@ export function LoginPage() {
 
       <p className="mt-2 text-center">Don't have an account? <TextLink to={paths.register}>Sign Up</TextLink></p>
 
-      <ThemeToggle />
-                <div className="bg-white text-navyBrand dark:bg-background dark:text-white">
-                        Theme test
-                </div>
-    </>
-  );
+      <ThemeToggle/>
+  </>
+  )
 }

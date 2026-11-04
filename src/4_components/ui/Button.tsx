@@ -17,9 +17,9 @@ const base =
   'disabled:opacity-60';
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-gradient-to-t from-amber to-soft text-xl font-bold text-navyBrand border border-amber border-4 hover:brightness-110 active:brightness-95',
-  secondary: 'border border-border-app bg-transparent text-white hover:bg-white/10',
-  ghost: 'border border-transparent hover:bg-white/10',
+  primary: 'bg-gradient-to-t from-amber to-ambersoft text-xl font-bold text-navyBrand border border-amber border-4 hover:brightness-110 active:brightness-95',
+  secondary: 'bg-panelbtnbg text-panelbtnbgtext hover:bg-hover hover:text-hovertext',
+  ghost: 'border',
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(

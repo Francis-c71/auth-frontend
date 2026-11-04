@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Button } from '@/4_components/ui/Button';
 import type { DashboardUser } from '../../types';
-import { CardHeader, StatusBadge, focusRing } from './parts';
+import { CardHeader, StatusBadge, focusRing } from './parts'
 
 interface ProfileCardProps {
   user: DashboardUser;
@@ -27,7 +27,7 @@ export function ProfileCard({ user, signingOut, onSignOut, onPay }: ProfileCardP
     : null;
 
   return (
-    <div>
+    <div className='bg-panel text-paneltext border border-border'>
       <CardHeader title="Profile" />
       <dl>
         <Row label="Name">{user.name}</Row>
@@ -56,7 +56,7 @@ export function ProfileCard({ user, signingOut, onSignOut, onPay }: ProfileCardP
       )}
 
       <div className="-mt-px border border-border p-4">
-        <Button variant="secondary" className="w-full px-4 py-2 text-sm" loading={signingOut} onClick={onSignOut}>
+        <Button variant="primary" className="w-full px-4 py-2 text-sm" loading={signingOut} onClick={onSignOut}>
           Sign out
         </Button>
       </div>

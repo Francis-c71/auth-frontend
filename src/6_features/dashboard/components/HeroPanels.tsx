@@ -26,14 +26,12 @@ function Panel({ image, children }: { image: { src: string; alt: string }; child
 }
 
 /** The book cover beside the lab. On small screens only the book is rendered. */
-export function HeroPanels({ firstName }: { firstName: string }) {
+export function HeroPanels() {
   const showLab = useMinWidth(768);
 
   return (
     <div className={`grid w-full ${showLab ? 'grid-cols-2' : 'grid-cols-1'}`}>
       <Panel image={DASHBOARD_IMAGES.book}>
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Hi, {firstName}</h1>
-        <p className="mt-2 max-w-md text-base leading-relaxed text-white/80">Open Learn to start a food test.</p>
       </Panel>
       {showLab && <Panel image={DASHBOARD_IMAGES.lab} />}
     </div>

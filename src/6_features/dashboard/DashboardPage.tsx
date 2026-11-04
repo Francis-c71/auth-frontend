@@ -10,7 +10,6 @@ export function DashboardPage() {
 
   if (!user) return null; // <ProtectedRoute> guarantees a user; this narrows the type.
 
-  const firstName = user.name.split(' ')[0];
 
   async function handleSignOut() {
     setSigningOut(true);
@@ -22,10 +21,10 @@ export function DashboardPage() {
   }
 
   return (
-    <div className="flex min-h-dvh flex-col bg-[#0a0a0a] text-white">
+    <div className="flex min-h-dvh flex-col bg-brand text-paneltext">
       <DashboardBar user={user} signingOut={signingOut} onSignOut={handleSignOut} />
       <main className="flex flex-1">
-        <HeroPanels firstName={firstName} />
+        <HeroPanels/>
       </main>
     </div>
   );

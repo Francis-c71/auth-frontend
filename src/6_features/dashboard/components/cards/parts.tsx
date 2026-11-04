@@ -1,11 +1,10 @@
 import type { ReactNode } from 'react';
 
-export const focusRing =
-  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white';
+export const focusRing = 'bg-background text-backgroundtext hover:bg-hover hover: hovertext focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white';
 
 export function CardHeader({ title, note }: { title: string; note?: string }) {
   return (
-    <div className="border border-border bg-background px-4 py-3">
+    <div className="bg-brand px-4 py-3">
       <h2 className="text-base font-bold">{title}</h2>
       {note && <p className="mt-0.5 text-sm text-foreground">{note}</p>}
     </div>
@@ -20,7 +19,7 @@ export function StatusBadge({ ok, yes, no }: { ok: boolean; yes: string; no: str
   return (
     <span
       className={`border border-border px-2.5 py-0.5 text-xs font-semibold ${
-        ok ? 'bg-backround text-foreground' : 'bg-panel text-soft'
+        ok ? 'bg-backround text-background-text' : 'bg-panel text-soft'
       }`}
     >
       {ok ? yes : no}

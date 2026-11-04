@@ -46,8 +46,8 @@ export function DashboardBar({ user, signingOut, onSignOut }: DashboardBarProps)
   const showPayments = () => setOpenId('payments');
 
   return (
-    <header className="relative z-40 border border-border bg-[#111111]">
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-3">
+    <header className="relative z-40 border border-border bg-brand">
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-2">
         <Logo />
         <nav ref={navRef} aria-label="Main" className="flex items-center gap-1">
           <HoverCard {...menu('learn')} label="Learn">

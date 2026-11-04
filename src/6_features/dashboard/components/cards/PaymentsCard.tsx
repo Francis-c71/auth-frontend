@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { CardHeader, focusRing } from './parts';
+import mtnMobileMoneyLogo from '../../assets/mtnMoMoLogo.png';
+import airtelMoneyLogo from '../../assets/airtelMoneyLogo.png';
 
 type Method = 'mtn' | 'airtel';
 
 const METHODS: { id: Method; name: string; mark: string }[] = [
-  { id: 'mtn', name: 'MTN MobileMoney', mark: 'MTN' },
-  { id: 'airtel', name: 'Airtel Money', mark: 'Airtel' },
+  { id: 'mtn', name: 'MTN MobileMoney', mark: mtnMobileMoneyLogo },
+  { id: 'airtel', name: 'Airtel Money', mark: airtelMoneyLogo },
 ];
 
 interface PaymentsCardProps {
@@ -40,10 +42,10 @@ export function PaymentsCard({ isPaid, onSelect }: PaymentsCardProps) {
                 setPicked(m.id);
                 onSelect?.(m.id);
               }}
-              className={`-mt-px flex w-full items-center gap-4 border border-border px-4 py-3 text-left hover:bg-[#1c1c1c] first:mt-0 ${focusRing}`}
+              className={`-mt-px flex w-full items-center gap-4 border border-border bg-background text-backgroundtext px-4 py-2 text-left hover:bg-hover hover:text-hovertext first:mt-0 ${focusRing}`}
             >
-              <span className="grid h-9 w-14 shrink-0 place-items-center border border-border bg-[#181818] text-xs font-bold">
-                {m.mark}
+              <span className="grid h-10 w-10 shrink-0 place-items-center border border-border bg-background">
+                <img src={m.mark } alt="" className="max-h-full max-w-full object-contain" />
               </span>
               <span className="text-sm font-semibold">{m.name}</span>
             </button>

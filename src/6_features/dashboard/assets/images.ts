@@ -1,8 +1,8 @@
-import bookCover from './book-cover.svg';
-import lab from './lab.svg';
+import coverPage from './coverPage.jpg';
+import bioLab from './bioLab.png';
 
 /** To use real photos, add the files here and change these two imports. */
 export const DASHBOARD_IMAGES = {
-  book: { src: bookCover, alt: 'Cover of the practical book' },
-  lab: { src: lab, alt: 'A laboratory bench with glassware' },
+  book: { src: coverPage, alt: 'Cover of the practical book' },
+  lab: { src: bioLab, alt: 'A biological laboratory with microscopes' },
 } as const;
