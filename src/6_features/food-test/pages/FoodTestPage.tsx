@@ -33,24 +33,16 @@ export function FoodTestPage({ experiment = nonReducingSugar }: { experiment?: E
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <header className="border-b border-border bg-background">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4">
-          <Logo />
-          <span className="text-sm text-soft">Food tests</span>
+          <Logo />       
         </div>
       </header>
 
       <main className="flex-1 bg-panel">
         <div className="mx-auto max-w-[1400px] px-6 py-10">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{experiment.title}</h1>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-soft">
-            <span className="font-semibold text-foreground">Aim: </span>
-            {experiment.aim}
-          </p>
-
+          <h1 className="text-xl font-bold tracking-tight text-paneltext sm:text-2xl">{experiment.title}</h1>
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <span className="text-sm font-semibold">Sample to test</span>
             <OutcomeSelector value={outcome} labels={experiment.outcomeLabels} onChange={setOutcome} />
           </div>
-
           <div className="mt-6">
             <Session key={outcome} experiment={experiment} outcome={outcome} />
           </div>

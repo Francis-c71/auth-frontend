@@ -18,8 +18,8 @@ export function OutcomeSelector({ value, labels, onChange }: OutcomeSelectorProp
             role="radio"
             aria-checked={selected}
             onClick={() => onChange(key)}
-            className={`-ml-px border border-outline px-4 py-2.5 text-sm first:ml-0 focus-visible:relative focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline ${
-              selected ? 'bg-accent font-semibold text-onAccent' : 'bg-background text-soft hover:bg-panel hover:text-foreground'
+            className={`-ml-px px-4 py-2.5 font-semibold text-base mr-2 first:ml-0 focus-visible:relative focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline ${
+              selected ? 'bg-hover text-hovertext' : 'bg-panelbtnbg text-panelbtntext hover:bg-hover hover:text-hovertext'
             }`}
           >
             {labels[key]}

@@ -30,5 +30,6 @@ export function TypedText({ text, speed = 22, instant = false }: TypedTextProps)
       <span aria-hidden="true">{text.slice(0, count)}</span>{' '}
       <span className="sr-only">{text} </span>
     </>
-  );
+)
+
 }

@@ -21,16 +21,24 @@ export default {
 
   theme: {
     colors: {
-      background: '#1b222c', // page, cells, cards
-      panel: '#2f3a4c',      // raised areas, hover fill
-      border: '#2f3a4c',     // quiet structural lines
-      outline: '#d0d5dd',    // controls only
-      foreground: '#f4f5f6', // main text
-      soft: '#e7e9ee',       // secondary text
-      muted: '#8d96a5',      // placeholders (use on `background`, not on `panel`)
-      accent: '#195936',     // selected and active
-      onAccent: '#eaf6ef',   // text on accent
-      brand: '#13c965',      // logo only
+      background: '#181832', // page, cells, cards
+      backgroundtext: '#8C8CA3',
+
+      panel: '#222244',      // panels
+      paneltext: '#D9D9E6',
+
+      panelbtnbg: '#26264A', // raised buttonsabove panel
+      panelbtntext: '#C2C2D6',
+
+      hover: '#2B2B54',      // raised areas, hover fill
+      hovertext: '#FFFFFF',
+
+      card: '#2B2B54',       // cards, raised areas
+      cardtext: '#E6E6F2',
+
+      border: '#343343',     // quiet structural lines
+      
+      brand: '#0a0a23',      // logo only
 
       transparent: 'transparent',
       white: '#ffffff',
@@ -39,12 +47,11 @@ export default {
       navyBrand: '#0a0a23',
       backgroundAuth: '#181832', 
       cards: '#252540',  
-      hover: '#66667D',
-       gold: '#ffc300',
-       coffee: '#4d3800',
-       amber: '#feac32',
-       softAuth: '#fecb4b',
-       amberdeep: '#ffac33',
+      gold: '#ffc300',
+      coffee: '#4d3800',
+      amber: '#feac32',
+      ambersoft: '#fecb4b',
+      amberdeep: '#ffac33',
 
       slate: {
         DEFAULT: 'var(--color-slate)',

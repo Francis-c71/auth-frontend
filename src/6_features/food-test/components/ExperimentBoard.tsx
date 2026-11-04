@@ -14,8 +14,8 @@ interface ExperimentBoardProps {
 }
 
 const cell = 'flex min-w-0 flex-col border-b border-r border-border bg-background';
-const head = 'border-b border-border px-5 py-3 text-sm font-semibold text-foreground';
-const body = 'flex-1 px-5 py-4 text-[15px] leading-8';
+const head = 'border-b border-border px-5 py-3 text-xl font-bold text-backgroundtext';
+const body = 'flex-1 px-5 py-4 text-left font-semibold text-lg leading-8';
 const mark = 'box-decoration-clone px-1.5 py-0.5 transition-colors duration-300';
 
 /**
@@ -41,8 +41,8 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
     <div className="grid grid-cols-1 border-l border-t border-border lg:grid-cols-[minmax(0,46fr)_minmax(0,30fr)_minmax(0,24fr)]">
       <section aria-labelledby="procedure-heading" className={`${cell} lg:col-start-1 lg:row-start-1`}>
         <h2 id="procedure-heading" className={head}>
-          <span className="lg:hidden">Procedures</span>
-          <span className="hidden lg:inline">Procedure and video</span>
+          <span className="lg:hidden">Procedure(s)</span>
+          <span className="hidden lg:inline">Procedure(s)</span>
         </h2>
         <p className={body}>
           {steps.map((step, i) => {
@@ -51,7 +51,7 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
               <span
                 key={step.id}
                 aria-current={active ? 'step' : undefined}
-                className={`${mark} ${active ? 'bg-accent font-medium text-onAccent' : i < completed ? 'text-foreground' : 'text-soft'}`}
+                className={`${mark} ${active ? 'bg-panel font-medium text-paneltext pr-0' : i < completed ? 'text-backgroundtext' : 'text-backgroundtext'}`}
               >
                 <TypedText text={step.procedure} instant />{' '}
               </span>
@@ -72,50 +72,52 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
 
       <section aria-labelledby="observation-heading" className={`${cell} lg:col-start-2 lg:row-start-1`}>
         <h2 id="observation-heading" className={head}>
-          Observations
+          Observation(s)
         </h2>
         <div aria-live="polite" className={body}>
           {completed === 0 ? (
-            <span className="text-muted">
-              {playback.playing ? 'Observing…' : 'Observations are recorded as the video plays.'}
+            <span className="text-backgroundtext text-sm">
+              {playback.playing ? 'Observing...' : 'Observation(s) is(are) recorded after the experiment.'}
             </span>
           ) : (
             <p>
-              {steps.slice(0, completed).map((step, i) => {
-                const latest = i === completed - 1 && !done;
-                return (
-                  <span key={step.id} className={`${mark} ${latest ? 'bg-accent font-medium text-onAccent' : 'text-foreground'}`}>
-                    <TypedText text={step.observation[outcome]} />{' '}
-                  </span>
-                );
-              })}
-              {!done && <span className="px-1.5 text-muted">Observing…</span>}
+              {steps
+                .slice(0, completed)
+                .filter((step) => step.observation[outcome]?.trim())
+                .map((step, i, filteredSteps) => {
+                  const latest = i === filteredSteps.length - 1 && !done;
+
+                  return (
+                    <span
+                      key={step.id}
+                      className={`${mark} ${latest ? 'bg-background text-backgroundtext' : 'text-backgroundtext'}`}
+                    >
+                      <TypedText text={step.observation[outcome]} />{' '}
+                    </span>
+                  );
+                })}
             </p>
+            
           )}
         </div>
       </section>
 
-      <section aria-label="Progress" className="hidden min-w-0 border-b border-r border-border bg-background px-5 py-4 lg:col-start-2 lg:row-start-2 lg:block">
+      {/* <section aria-label="Progress" className="hidden min-w-0 border-b border-r border-border bg-background px-5 py-4 lg:col-start-2 lg:row-start-2 lg:block">
         {strip}
-      </section>
+      </section> */}
 
-      <section aria-labelledby="deduction-heading" className={`${cell} lg:col-start-3 lg:row-span-2 lg:row-start-1`}>
+      <section aria-labelledby="deduction-heading" className={`${cell} lg:col-start-3 lg:row-span-1 lg:row-start-1`}>
         <h2 id="deduction-heading" className={head}>
-          Deductions
+          Deduction(s)
         </h2>
-        <div className="flex-1 px-5 py-4">
-          <div className="space-y-4 lg:sticky lg:top-6">
+        <div className={"text-lg font-semibold flex-1 px-5 py-4"}>
+          <div className="space-y-4 lg:sticky lg:top-6 text-backgroundtext">
             {done ? (
               <>
-                <p className="border border-border bg-accent px-4 py-3 text-base font-bold text-onAccent">
-                  <TypedText text={deduction.result} />
-                </p>
-                <p className="text-sm leading-relaxed text-soft">
-                  <TypedText text={deduction.explanation} speed={14} />
-                </p>
+                  <TypedText text={deduction.result} />            
               </>
             ) : (
-              <p className="text-sm leading-relaxed text-muted">The deduction is recorded when the video ends.</p>
+              <p className="text-sm leading-relaxed text-muted">Conclusion(s) is(are) recorded after the experiment.</p>
             )}
           </div>
         </div>
