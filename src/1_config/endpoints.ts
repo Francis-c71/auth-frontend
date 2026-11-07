@@ -1,8 +1,4 @@
-/**
- * Every backend route the frontend calls. If your API uses different paths,
- * this is the only file you need to touch.
- * Paths are appended to VITE_API_URL. 
- */
+/** Every backend route the frontend calls. */
 export const endpoints = {
   login: '/auth/login',
   register: '/auth/register',

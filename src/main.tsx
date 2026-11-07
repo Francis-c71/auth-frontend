@@ -16,7 +16,7 @@ import { AuthProvider } from '@/6_features/auth/providers/AuthProvider';
 // The router object defines the routes and their corresponding components for the application
 import { router } from '@/7_routes/router';
 import '@/5_styles/index.css';
-import { ThemeProvider } from '@/3_utils/ThemeContext';
+import { ThemeProvider } from '@/3_context/ThemeContext';
 import { ThemeColor } from './4_components/ui/MobileBrowserTheme';
 
 

@@ -9,22 +9,19 @@ import { paths } from './paths';
  * createBrowserRouter() receives an array of route objects,
  * each object describes a route, a layout, a redirect, or a group of child routes,
  * think of createBrowserRouter() as creating a map, and RouterProvider as using that map to navigate the application.
- */
-
-/**
+ 
  * path: the URL this route matches,
  * element: the React component to render,
  * <Navigate to={paths.dashboard} />: redirects to the dashboard,
  * replace: replaces the current browser history entry instead of adding another one,
  * children defines routes nested inside another route.
- */
-
-/**
+ 
  * Instead of bringing every book into a room before anyone arrives, 
  * the application fetches the required book when someone asks for it.
  * This can reduce the JavaScript needed for the initial page load,
  * the actual benefit depends on your build and how the code is split.
  */
+
 export const router = createBrowserRouter([
   { path: paths.home, 
     element: <Navigate to={paths.dashboard} replace /> 
