@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FOOD_TESTS, canAccess } from '../../data/foodTest';
 import type { DashboardUser } from '../../types';
 import { CardHeader, Tag, focusRing } from './parts';
@@ -44,10 +45,10 @@ export function LearnCard({ user, onLocked }: LearnCardProps) {
           }
           return (
             <li key={test.id}>
-              <a href={test.href} className={`${row} ${focusRing}`}>
-                {body}
-                <Tag>Present open</Tag>
-              </a>
+              <Link to={test.href} className={`${row} hover:bg-panel ${focusRing}`}>
+                  {body}
+                  <Tag>Open</Tag>
+              </Link>
             </li>
           );
         })}

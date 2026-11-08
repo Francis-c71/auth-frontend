@@ -44,10 +44,13 @@ export function FoodTestPage({ experiment = nonReducingSugar }: { experiment?: E
             <OutcomeSelector value={outcome} labels={experiment.outcomeLabels} onChange={setOutcome} />
           </div>
           <div className="mt-6">
-            <Session key={outcome} experiment={experiment} outcome={outcome} />
+            <Session key={`${experiment.id}-${outcome}`} experiment={experiment} outcome={outcome} />
+            
           </div>
         </div>
       </main>
+
+
     </div>
   );
 }

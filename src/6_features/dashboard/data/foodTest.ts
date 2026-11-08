@@ -14,13 +14,14 @@ export const FOOD_TESTS: FoodTest[] = [
   {
     id: 'reducing-sugar-test',
     name: 'Reducing sugars test',
-    access: 'paid'
+    access: 'paid',
+    href: '/food-test/reducing-sugar',
   },
   {
     id: 'non-reducing-sugar',
     name: 'Non-reducing sugars test',
     access: 'free',
-    href: '/food-test',
+    href: '/food-test/non-reducing-sugar',
   },
   { 
     id: 'reducing-sugar', 

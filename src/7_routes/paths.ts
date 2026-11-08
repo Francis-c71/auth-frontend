@@ -7,5 +7,5 @@ export const paths = {
   resetPassword: '/reset-password',
   verifyEmail: '/verify-email',
   dashboard: '/dashboard',
-  foodtest: '/food-test',
+  foodtest: '/food-test/:testId',
 } as const;

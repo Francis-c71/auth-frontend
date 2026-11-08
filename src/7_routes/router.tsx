@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
       },
       {
         path: paths.foodtest,
-        lazy: async () => ({ Component: (await import('@/6_features/food-test/pages/FoodTestPage')).FoodTestPage,}),
+        lazy: async () => ({ Component: (await import('@/6_features/food-test/pages/FoodTestRoute')).FoodTestRoute,}),
       },
     ],
   },

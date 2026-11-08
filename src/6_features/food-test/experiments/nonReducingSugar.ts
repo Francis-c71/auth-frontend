@@ -5,9 +5,18 @@ import type { Experiment, Recording } from '../types';
  *   { src: '/videos/non-reducing-present.mp4', poster: '...', duration: 61.4, cues: [0, 7.2, ...] }
  * Put the files in /public/videos.
  */
-const preview: Recording = {
+const present: Recording = {
+  src: '/videos/non-reducing-present.mp4',
+  poster: '/videos/non-reducing-present.jpg', // optional, remove this line if you have no poster
+  duration: 61, // approximate; the real length is read from the file once it loads
+  cues: [0, 6.5, 13, 24, 32, 39, 46], // the second each of the 7 steps begins
+};
+
+const absent: Recording = {
+  src: '/videos/non-reducing-absent.mp4',
+  poster: '/videos/non-reducing-absent.jpg',
   duration: 58,
-  cues: [0, 6, 12, 22, 30, 36, 42],
+  cues: [0, 6.5, 13, 24, 32, 39, 46],
 };
 
 
@@ -19,7 +28,7 @@ export const nonReducingSugar: Experiment = {
     present: 'Positive test',
     absent: 'Negative test',
   },
-  recordings: { present: preview, absent: preview },
+  recordings: { present, absent },
 
   steps: [
     {

@@ -1,4 +1,4 @@
-import { ProgressStrip } from './ProgressStrip';
+
 import { TypedText } from './TypedText';
 import { VideoPanel } from './VideoPanel';
 import type { Playback } from '../hooks/usePlayback';
@@ -27,16 +27,7 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
   const deduction = experiment.deduction[outcome];
   const { currentIndex, completed, done } = progress;
 
-  const strip = (
-    <ProgressStrip
-      total={steps.length}
-      completed={completed}
-      currentIndex={currentIndex}
-      started={playback.time > 0}
-      done={done}
-    />
-  );
-
+  
   return (
     <div className="grid grid-cols-1 border-l border-t border-border lg:grid-cols-[minmax(0,46fr)_minmax(0,30fr)_minmax(0,24fr)]">
       <section aria-labelledby="procedure-heading" className={`${cell} lg:col-start-1 lg:row-start-1`}>
@@ -67,7 +58,7 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
         <div className="p-4">
           <VideoPanel recording={recording} playback={playback} />
         </div>
-        <div className="border-t border-border px-5 py-4 lg:hidden">{strip}</div>
+
       </section>
 
       <section aria-labelledby="observation-heading" className={`${cell} lg:col-start-2 lg:row-start-1`}>
@@ -77,7 +68,6 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
         <div aria-live="polite" className={body}>
           {completed === 0 ? (
             <span className="text-backgroundtext text-sm">
-              {playback.playing ? 'Observing...' : 'Observation(s) is(are) recorded after the experiment.'}
             </span>
           ) : (
             <p>
@@ -102,10 +92,6 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
         </div>
       </section>
 
-      {/* <section aria-label="Progress" className="hidden min-w-0 border-b border-r border-border bg-background px-5 py-4 lg:col-start-2 lg:row-start-2 lg:block">
-        {strip}
-      </section> */}
-
       <section aria-labelledby="deduction-heading" className={`${cell} lg:col-start-3 lg:row-span-1 lg:row-start-1`}>
         <h2 id="deduction-heading" className={head}>
           Deduction(s)
@@ -117,7 +103,7 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
                   <TypedText text={deduction.result} />            
               </>
             ) : (
-              <p className="text-sm leading-relaxed text-muted">Conclusion(s) is(are) recorded after the experiment.</p>
+              <p></p>
             )}
           </div>
         </div>
