@@ -22,8 +22,7 @@ const absent: Recording = {
 
 export const reducingSugar: Experiment = {
   id: 'reducing-sugar',
-  title: 'Test for reducing sugars',
-  aim: 'To find out whether a food sample contains a reducing sugar, such as glucose or fructose.',
+  title: 'Test for reducing sugars.',
   outcomeLabels: {
     present: 'Positive test',
     absent: 'Negative test',
@@ -48,7 +47,7 @@ export const reducingSugar: Experiment = {
     },
     {
       id: 'boil',
-      procedure: 'And the mixture was boiled.',
+      procedure: 'And the mixture boiled.',
       observation: {
         present: 'The blue solution turned to green solution, to yellow precipitate, to orange precipitate, and finally brown precipitate.',
         absent: 'The blue solution persisted.',
@@ -59,13 +58,9 @@ export const reducingSugar: Experiment = {
   deduction: {
     present: {
       result: 'Reducing sugars present.',
-      explanation:
-        'A brick-red precipitate formed only after the sample was heated with acid. The acid broke the non-reducing sugar into reducing sugars, which then reduced Benedict’s solution.',
     },
     absent: {
       result: 'Reducing sugars absent.',
-      explanation:
-        'The solution stayed blue even after heating with acid. No reducing sugars were released, so the sample has no non-reducing sugar.',
     },
-  },
-};
+  }
+}

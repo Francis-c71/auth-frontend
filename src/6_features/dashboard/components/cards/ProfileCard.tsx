@@ -28,7 +28,7 @@ export function ProfileCard({ user, signingOut, onSignOut, onPay }: ProfileCardP
 
   return (
     <div className='bg-panel text-paneltext border border-border'>
-      <CardHeader title="Profile" />
+      <CardHeader chapter="Profile." />
       <dl>
         <Row label="Name">{user.name}</Row>
         <Row label="Email">{user.email}</Row>

@@ -2,11 +2,11 @@ import type { ReactNode } from 'react';
 
 export const focusRing = 'bg-background text-backgroundtext hover:bg-hover hover: hovertext focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white';
 
-export function CardHeader({ title, note }: { title: string; note?: string }) {
+export function CardHeader({ chapter, topic }: { chapter?: string; topic?: string }) {
   return (
     <div className="bg-brand px-4 py-3">
-      <h2 className="text-base font-bold">{title}</h2>
-      {note && <p className="mt-0.5 text-sm text-foreground">{note}</p>}
+      {chapter && <h1 className="text-3xl font-bold text-amber">{chapter}</h1>}
+      {topic && <p className="mt-0.5 text-xl font-semibold text-foreground">{topic}</p>}
     </div>
   );
 }

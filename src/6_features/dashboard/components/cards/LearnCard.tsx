@@ -14,7 +14,7 @@ const row = '-mt-px flex w-full items-center bg-background text-backgroundtext j
 export function LearnCard({ user, onLocked }: LearnCardProps) {
   return (
     <div>
-      <CardHeader title="Food tests" note="Choose a test to run." />
+      <CardHeader chapter="Physiology." topic="Food tests." />
       <ul>
         {FOOD_TESTS.map((test) => {
           const body = (

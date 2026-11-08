@@ -12,40 +12,35 @@ export interface FoodTest {
 
 export const FOOD_TESTS: FoodTest[] = [
   {
-    id: 'reducing-sugar-test',
-    name: 'Reducing sugars test',
-    access: 'paid',
+    id: 'reducing-sugar',
+    name: 'Benedict\'s test.',
+    access: 'free',
     href: '/food-test/reducing-sugar',
   },
   {
     id: 'non-reducing-sugar',
-    name: 'Non-reducing sugars test',
-    access: 'free',
+    name: 'Non-reducing sugars test.',
+    access: 'paid',
     href: '/food-test/non-reducing-sugar',
   },
   { 
-    id: 'reducing-sugar', 
-    name: 'Benedict\'s test', 
-    access: 'paid' 
-  },
-  { 
     id: 'starch', 
-    name: 'Iodine test', 
+    name: 'Iodine test.', 
     access: 'paid' 
   },
   { 
     id: 'protein', 
-    name: 'Buiret test', 
+    name: 'Buiret test.', 
     access: 'paid' 
   },
   { 
-    id: 'fats', 
-    name: 'Emulsion test',  
+    id: 'lipids', 
+    name: 'Emulsion test.',  
     access: 'paid' 
   },
   {
     id: 'vitamin-c',
-    name: 'DCPIP test',
+    name: 'DCPIP test.',
     access: 'paid'
   },
 ];

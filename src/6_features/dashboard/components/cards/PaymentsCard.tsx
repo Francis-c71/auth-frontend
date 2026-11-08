@@ -22,7 +22,7 @@ export function PaymentsCard({ isPaid, onSelect }: PaymentsCardProps) {
   if (isPaid) {
     return (
       <div>
-        <CardHeader title="Payments" />
+        <CardHeader chapter="Payments" />
         <p className="border border-border px-4 py-4 text-sm leading-relaxed text-white/85">
           Payment received. You have full access.
         </p>
@@ -32,7 +32,7 @@ export function PaymentsCard({ isPaid, onSelect }: PaymentsCardProps) {
 
   return (
     <div>
-      <CardHeader title="Payments" note="Choose how you want to pay." />
+      <CardHeader chapter="Payments." topic="Choose how you want to pay." />
       <ul>
         {METHODS.map((m) => (
           <li key={m.id}>
