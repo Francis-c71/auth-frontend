@@ -1,0 +1,47 @@
+/*
+  Procedure highlight.
+  Every step owns a gradient highlight. At a step change the old one drains from its tail to its head
+  while the new one forms, both over the same time. The gradient spans the whole length of the step,
+  so halfway through, a step is a smooth ramp from 0% to 100% with no visible break.
+*/
+
+/* Lets the browser animate the two progress values below. */
+@property --ph-in {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+@property --ph-out {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+.ph {
+  position: relative;
+  --ph-rgb: 25 89 54;       /* highlight colour as "red green blue". Try 35 122 75 for a brighter green. */
+  --ph-duration: 2000ms;    /* how long the hand-off takes */
+  --ph-lead: 0.5;           /* where the hand-off sits around the step's start: 0 = starts then, 0.5 = centred, 1 = ends then */
+  --ph-spread: 1;           /* 1 = the gradient spans the whole step. Smaller (e.g. 0.4) gives a tighter soft edge. */
+  --ph-ease: ease-in-out;   /* use linear for an even pace */
+  --ph-radius: 4px;
+}
+
+.ph-line {
+  position: absolute;
+  pointer-events: none;
+  border-radius: var(--ph-radius);
+  /* How far the forming and draining edges have travelled. */
+  --e-in: calc(var(--ph-in) * (1 + var(--ph-spread)));
+  --e-out: calc(var(--ph-out) * (1 + var(--ph-spread)));
+  transition-property: --ph-in, --ph-out;
+  transition-timing-function: var(--ph-ease);
+}
+
+/* Reduced motion: a quick fade instead of a slow one. */
+@media (prefers-reduced-motion: reduce) {
+  .ph-line,
+  .ph span {
+    transition-duration: 250ms !important;
+  }
+}

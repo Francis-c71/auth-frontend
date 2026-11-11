@@ -15,8 +15,8 @@ interface ExperimentBoardProps {
 
 const cell = 'flex min-w-0 flex-col border-b border-r border-border bg-background';
 const head = 'border-b border-border px-5 py-3 text-xl font-bold text-backgroundtext';
-const body = 'flex-1 px-5 py-4 text-left font-semibold text-lg leading-8';
-const mark = 'box-decoration-clone px-1.5 py-0.5 transition-colors duration-300';
+const body = 'flex-1 min-h-[200px] px-5 py-4 text-left font-semibold text-lg leading-8';
+const mark = 'box-decoration-clone  px-1.5 py-0.5 transition-colors duration-300';
 
 /**
  * Three columns on large screens (procedure and video | observations | deductions).
@@ -30,8 +30,8 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
   
   return (
     <div className="grid grid-cols-1 border-l border-t border-border lg:grid-cols-[minmax(0,46fr)_minmax(0,30fr)_minmax(0,24fr)]">
-      <section aria-labelledby="procedure-heading" className={`${cell} lg:col-start-1 lg:row-start-1`}>
-        <h2 id="procedure-heading" className={head}>
+      <section aria-labelledby="procedure-heading" className={`${cell} lg:col-start-1 lg:row-start-1 min-h-[250px]`}>
+        <h2 id="procedure-heading" className={head} >
           <span className="lg:hidden">Procedure(s)</span>
           <span className="hidden lg:inline">Procedure(s)</span>
         </h2>
@@ -42,7 +42,7 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
               <span
                 key={step.id}
                 aria-current={active ? 'step' : undefined}
-                className={`${mark} ${active ? 'bg-panel font-medium text-paneltext pr-0' : i < completed ? 'text-backgroundtext' : 'text-backgroundtext'}`}
+                className={`${mark} ${active ? 'bg-[#195936] rounded-md' : i < completed ? 'text-backgroundtext' : 'text-backgroundtext'}`}
               >
                 <TypedText text={step.procedure} instant />{' '}
               </span>
@@ -53,15 +53,15 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
 
       <section aria-labelledby="video-heading" className={`${cell} lg:col-start-1 lg:row-start-2`}>
         <h2 id="video-heading" className={`${head} lg:hidden`}>
-          Video
+          Lab simulation
         </h2>
-        <div className="p-4">
+        <div className="p-0">
           <VideoPanel recording={recording} playback={playback} />
         </div>
 
       </section>
 
-      <section aria-labelledby="observation-heading" className={`${cell} lg:col-start-2 lg:row-start-1`}>
+      <section aria-labelledby="observation-heading" className={`${cell} sm:min-h-[200px] lg:col-start-2 lg:row-start-1`}>
         <h2 id="observation-heading" className={head}>
           Observation(s)
         </h2>
@@ -92,7 +92,7 @@ export function ExperimentBoard({ experiment, outcome, recording, playback, prog
         </div>
       </section>
 
-      <section aria-labelledby="deduction-heading" className={`${cell} lg:col-start-3 lg:row-span-1 lg:row-start-1`}>
+      <section aria-labelledby="deduction-heading" className={`${cell} min-h-[200px] lg:col-start-3 lg:row-span-1 lg:row-start-1`}>
         <h2 id="deduction-heading" className={head}>
           Deduction(s)
         </h2>
